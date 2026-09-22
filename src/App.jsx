@@ -9,8 +9,8 @@ function encode(data) {
 function Wordmark({ size = 'hero' }) {
   return (
     <p className={`wordmark ${size}`}>
-      <span>Nacho Average</span>
-      <span>30th Fiesta</span>
+      <span className="red">Nacho Average</span>
+      <span className="gold">30th Fiesta</span>
     </p>
   )
 }
@@ -149,14 +149,15 @@ export default function App() {
       <section className="hero">
         <Sunburst className="sunburst" />
         <div className="hero-copy">
+          <p className="hero-chip cyan">★ The main event of the decade ★</p>
           <Wordmark />
-          <p className="hero-sub">A Nacho Libre-inspired birthday fiesta</p>
+          <p className="hero-chip black">A Nacho Libre-inspired birthday fiesta</p>
           <div className="hero-mascot-row">
-            <Character name="pepper" alt="" className="hero-side" />
+            <span className="hero-badge gold">Free guacamole!</span>
             <div className="hero-mascot">
-              <Character name="taco-walk" alt="Nacho the taco" />
+              <img src="/characters/lucha-taco.png" alt="Lucha taco" />
             </div>
-            <Character name="agave" alt="" className="hero-side" />
+            <span className="hero-badge red">Dance battle!</span>
           </div>
         </div>
       </section>
