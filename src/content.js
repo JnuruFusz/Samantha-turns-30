@@ -3,78 +3,80 @@ export const party = {
   nickname: 'Sammi',
   born: 'October 14',
   celebrating: 'October 18',
+  celebratingLong: 'Saturday, October 18',
   verse: 'Psalm 30',
   quote: 'You turned my wailing into dancing.',
-  closing: 'Joy comes in the morning.',
   time: 'Add time later',
   location: 'Add location later',
-  dressCode: 'Stretchy pants encouraged. Championship energy required.',
+  dressCode: 'Get your disguise ready.',
 }
 
 export const schedule = [
   {
     id: 'doors',
+    time: '7:00 PM',
     title: 'Doors Open & Nacho Bar',
-    detail: 'Grab a plate. Stretch. Mentally prepare.',
+    detail: 'Grab a plate and settle in. Stretchy pants encouraged.',
+    featured: false,
   },
   {
-    id: 'welcome',
-    title: 'The Monastery Welcome',
-    detail: 'Hugs, introductions, and one very official toast.',
+    id: 'entrance',
+    time: '8:00 PM',
+    title: 'The Grand Entrance',
+    detail: 'The heavyweight champion of the evening takes the ring.',
+    featured: false,
   },
   {
-    id: 'main',
-    title: 'The Main Event',
-    detail: 'Dinner, stories, and Samantha in the center of the ring.',
+    id: 'dance',
+    time: '9:00 PM',
+    title: 'Dance Battle Royale',
+    detail: 'No holds barred. The playlist is the only referee.',
+    featured: false,
   },
   {
     id: 'cake',
-    title: 'Championship Cake',
-    detail: 'Thirty candles. One heavyweight birthday girl.',
+    time: '10:00 PM',
+    title: 'Cake Smash Championship',
+    detail: 'Thirty candles. One very official title fight.',
+    featured: true,
   },
   {
     id: 'after',
-    title: 'Victory Lap',
-    detail: 'Music, dancing, and leftover nachos if you earned them.',
+    time: '11:00 PM',
+    title: 'After-Party Libre',
+    detail: 'Music, leftovers, and whatever happens after the bell.',
+    featured: false,
   },
 ]
 
 export const feast = [
   {
-    id: 'nachos',
-    title: 'El Supreme Nachos',
-    detail: 'The official weigh-in snack.',
+    id: 'tacos',
+    title: 'Championship Tacos',
+    detail: 'The official weigh-in snack. Extra cheese, no apologies.',
     mascot: 'taco',
   },
   {
-    id: 'guac',
-    title: 'Holy Guacamole',
-    detail: 'Blessed. Extra chips. No sharing required.',
-    mascot: 'guac',
+    id: 'tequila',
+    title: 'El Grande Tequila',
+    detail: 'Salt on the rim. Championship energy in the glass.',
+    mascot: 'tequila',
   },
   {
-    id: 'churros',
-    title: 'Championship Churros',
-    detail: 'Sweet victory, dusted in cinnamon.',
-    mascot: 'churro',
+    id: 'avocado',
+    title: 'Avocado Libre',
+    detail: 'Holy guacamole, now with a skateboard.',
+    mascot: 'avocado',
   },
 ]
 
+export const marquee = [
+  'Are you ready to rumble?',
+  'Nacho Average 30th Fiesta',
+  'Get your disguise ready',
+]
+
 export const gallery = [
-  {
-    id: 'hero',
-    title: 'Samantha now',
-    hint: 'Drop a favorite recent photo in public/photos/hero.jpg',
-    src: '',
-    shape: 'round',
-  },
-  {
-    id: 'champ',
-    title: 'Championship portrait',
-    hint: 'A smiling ring-ready photo for the fight card',
-    src: '',
-    shape: 'square',
-  },
   {
     id: 'baby',
     title: 'Baby Samantha',

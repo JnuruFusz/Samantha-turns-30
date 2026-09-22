@@ -30,8 +30,6 @@ Photo frames are already on the page. To fill one:
 
 Frames waiting:
 
-- `hero` — recent portrait
-- `champ` — championship card portrait
 - `baby`, `childhood`, `growing`, `faith`, `music`, `thirty` — highlight reel
 - `party` — wide fiesta / table photo
 

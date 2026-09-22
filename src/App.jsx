@@ -1,14 +1,6 @@
 import { useState } from 'react'
-import { feast, gallery, party, schedule } from './content'
-import {
-  ChurroMascot,
-  GuacMascot,
-  SidekickMascot,
-  StarBurst,
-  Sunburst,
-  TacoMascot,
-  WrestlerMascot,
-} from './illustrations'
+import { feast, gallery, marquee, party, schedule } from './content'
+import { Character, Sunburst, TicketStar } from './illustrations'
 
 function encode(data) {
   return new URLSearchParams(data).toString()
@@ -17,10 +9,8 @@ function encode(data) {
 function Wordmark({ size = 'hero' }) {
   return (
     <p className={`wordmark ${size}`}>
-      <span className="gold">NACHO</span>
-      <span className="red">AVERAGE</span>
-      <span className="gold">30TH</span>
-      <span className="red">FIESTA</span>
+      <span>Nacho Average</span>
+      <span>30th Fiesta</span>
     </p>
   )
 }
@@ -90,11 +80,12 @@ function RsvpForm() {
         </label>
       </p>
       <p className="gate-label">Official entry gate</p>
+      <p className="gate-sub">Fiesta commission licensed registration</p>
+      <label>
+        <span>Announce your name</span>
+        <input name="name" required placeholder="First and last name" />
+      </label>
       <div className="field-row">
-        <label>
-          <span>Your name</span>
-          <input name="name" required placeholder="First and last name" />
-        </label>
         <div>
           <span className="field-label">Are you coming?</span>
           <div className="choice" role="group" aria-label="Are you coming?">
@@ -110,10 +101,8 @@ function RsvpForm() {
             ))}
           </div>
         </div>
-      </div>
-      <div className="field-row">
         <label>
-          <span>How many people are coming?</span>
+          <span>How many in your party?</span>
           <select name="guests" defaultValue="1">
             {[1, 2, 3, 4, 5, 6].map((n) => (
               <option key={n} value={n}>
@@ -122,158 +111,92 @@ function RsvpForm() {
             ))}
           </select>
         </label>
-        <label>
-          <span>Ring name / costume</span>
-          <input name="costume" placeholder="Your reality-TV alter ego" />
-        </label>
       </div>
       <label>
-        <span>Food allergies or notes</span>
-        <input name="notes" placeholder="Anything we should know?" />
+        <span>Ring name / disguise</span>
+        <input name="costume" placeholder="Optional" />
       </label>
       <label>
-        <span>Birthday message for Samantha</span>
+        <span>Food notes</span>
+        <input name="notes" placeholder="Allergies or anything we should know" />
+      </label>
+      <label>
+        <span>Birthday message</span>
         <textarea name="message" placeholder="Sweet, funny, or both..." />
       </label>
       <button className="btn" type="submit">
-        Claim your ring spot
+        Book your spot
       </button>
       {status === 'error' && <p>Something went wrong. Try again, or text us your RSVP.</p>}
     </form>
   )
 }
 
-function mascotFor(id) {
-  if (id === 'guac') return <GuacMascot />
-  if (id === 'churro') return <ChurroMascot />
-  return <TacoMascot />
-}
-
-function Splash({ onEnter }) {
-  return (
-    <section className="splash">
-      <div className="invite">
-        <div className="invite-art">
-          <Wordmark size="invite" />
-          <div className="invite-mascots">
-            <WrestlerMascot />
-            <SidekickMascot />
-          </div>
-          <p className="invite-banner">Samantha turns 30!</p>
-        </div>
-        <div className="invite-copy">
-          <p className="kicker">The main event</p>
-          <h1>Get off your horse and drink your milk.</h1>
-          <dl className="meta-list">
-            <div>
-              <dt>Who</dt>
-              <dd>{party.name}</dd>
-            </div>
-            <div>
-              <dt>When</dt>
-              <dd>
-                {party.celebrating} · {party.time}
-              </dd>
-            </div>
-            <div>
-              <dt>Where</dt>
-              <dd>{party.location}</dd>
-            </div>
-            <div>
-              <dt>Look</dt>
-              <dd>{party.dressCode}</dd>
-            </div>
-          </dl>
-          <button className="btn" type="button" onClick={onEnter}>
-            Enter the fiesta
-          </button>
-        </div>
-      </div>
-    </section>
-  )
+function mascotFor(id, title) {
+  return <Character name={id} alt={title} />
 }
 
 export default function App() {
-  const [entered, setEntered] = useState(false)
-  const heroPhoto = gallery.find((item) => item.id === 'hero')
-  const champPhoto = gallery.find((item) => item.id === 'champ')
+  const storyPhotos = gallery.filter((item) => item.id !== 'party')
   const partyPhoto = gallery.find((item) => item.id === 'party')
-  const storyPhotos = gallery.filter((item) => !['hero', 'champ', 'party'].includes(item.id))
-
-  if (!entered) {
-    return <Splash onEnter={() => setEntered(true)} />
-  }
 
   return (
     <div className="site">
-      <header className="topbar">
-        <span>SE · Thirty</span>
-        <span>Nacho Average 30th</span>
-        <a href="#rsvp">RSVP</a>
-      </header>
+      <a className="rsvp-chip" href="#rsvp">
+        RSVP
+      </a>
 
       <section className="hero">
         <Sunburst className="sunburst" />
-        <div className="hero-copy reveal">
+        <div className="hero-copy">
           <Wordmark />
-          <div className="hero-mascot">
-            {heroPhoto?.src ? (
-              <PhotoSlot {...heroPhoto} />
-            ) : (
-              <>
-                <WrestlerMascot />
-                <p className="hero-photo-hint">Photo slot waiting under Highlight Reel</p>
-              </>
-            )}
+          <p className="hero-sub">A Nacho Libre-inspired birthday fiesta</p>
+          <div className="hero-mascot-row">
+            <Character name="pepper" alt="" className="hero-side" />
+            <div className="hero-mascot">
+              <Character name="taco-walk" alt="Nacho the taco" />
+            </div>
+            <Character name="agave" alt="" className="hero-side" />
           </div>
         </div>
       </section>
 
       <section className="band cream" id="card">
         <div className="section-head">
-          <StarBurst />
           <h2>The Championship Card</h2>
-          <p>A very official fight poster for a very official birthday.</p>
+          <p>Inside the details of the main event.</p>
         </div>
-        <article className="champ-card">
-          <div className="champ-copy">
-            <p className="kicker">Heavyweight birthday</p>
+        <article className="ticket">
+          <div className="ticket-main">
+            <p className="kicker">Heavyweight birthday clash</p>
             <h3>{party.name} turns 30</h3>
-            <dl className="meta-list">
+            <div className="ticket-meta">
               <div>
-                <dt>Born</dt>
-                <dd>{party.born}</dd>
+                <strong>{party.celebratingLong}</strong>
+                <span>{party.time}</span>
               </div>
               <div>
-                <dt>Main event</dt>
-                <dd>{party.celebrating}</dd>
+                <strong>The Fiesta Dome</strong>
+                <span>{party.location}</span>
               </div>
-              <div>
-                <dt>Bell time</dt>
-                <dd>{party.time}</dd>
-              </div>
-              <div>
-                <dt>Arena</dt>
-                <dd>{party.location}</dd>
-              </div>
-            </dl>
-            <a className="btn" href="#rsvp">
-              Claim your ring spot
-            </a>
+            </div>
           </div>
-          <PhotoSlot {...champPhoto} />
+          <div className="ticket-stub">
+            <p>Admit one</p>
+            <TicketStar />
+          </div>
         </article>
       </section>
 
       <section className="band cyan" id="schedule">
         <div className="section-head light">
           <h2>Battle Royale Schedule</h2>
-          <p>Keep your wrists taped and your plate ready.</p>
+          <p>A blow-by-blow itinerary of the fiesta.</p>
         </div>
         <ol className="schedule">
-          {schedule.map((item, index) => (
-            <li key={item.id}>
-              <span className="badge">{String(index + 1).padStart(2, '0')}</span>
+          {schedule.map((item) => (
+            <li key={item.id} className={item.featured ? 'featured' : ''}>
+              <span className="time">{item.time}</span>
               <div>
                 <h3>{item.title}</h3>
                 <p>{item.detail}</p>
@@ -291,13 +214,21 @@ export default function App() {
         <div className="feast-grid">
           {feast.map((item) => (
             <article key={item.id}>
-              <div className="feast-art">{mascotFor(item.mascot)}</div>
+              <div className="feast-art">{mascotFor(item.mascot, item.title)}</div>
               <h3>{item.title}</h3>
               <p>{item.detail}</p>
             </article>
           ))}
         </div>
       </section>
+
+      <div className="marquee" aria-hidden="true">
+        <div className="marquee-track">
+          {[...marquee, ...marquee, ...marquee].map((item, index) => (
+            <span key={`${item}-${index}`}>{item}</span>
+          ))}
+        </div>
+      </div>
 
       <section className="band cream" id="photos">
         <div className="section-head">
@@ -318,14 +249,16 @@ export default function App() {
       <section className="band cream rsvp-band" id="rsvp">
         <div className="section-head">
           <h2>Claim Your Ring Spot</h2>
-          <p>Write your name on the card. Stretchy pants optional. Joy required.</p>
+          <p>Register your wrestling identity.</p>
         </div>
         <RsvpForm />
       </section>
 
       <footer className="site-footer">
-        <Wordmark size="footer" />
-        <p>“{party.quote}”</p>
+        <div>
+          <Wordmark size="footer" />
+          <p>A Nacho Libre-inspired birthday fiesta</p>
+        </div>
         <p>
           {party.verse} · {party.born} · {party.celebrating}
         </p>
