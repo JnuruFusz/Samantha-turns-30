@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { feast, gallery, marquee, party, schedule } from './content'
-import { ChurroMascot, MargaritaMascot, NachoMascot, Sunburst, TicketStar } from './illustrations'
+import { Character, Sunburst, TicketStar } from './illustrations'
 
 function encode(data) {
   return new URLSearchParams(data).toString()
@@ -132,10 +132,8 @@ function RsvpForm() {
   )
 }
 
-function mascotFor(id) {
-  if (id === 'margarita') return <MargaritaMascot />
-  if (id === 'churro') return <ChurroMascot />
-  return <NachoMascot />
+function mascotFor(id, title) {
+  return <Character name={id} alt={title} />
 }
 
 export default function App() {
@@ -154,11 +152,11 @@ export default function App() {
           <Wordmark />
           <p className="hero-sub">A Nacho Libre-inspired birthday fiesta</p>
           <div className="hero-mascot-row">
-            <span className="hero-badge">Free nachos</span>
+            <Character name="pepper" alt="" className="hero-side" />
             <div className="hero-mascot">
-              <NachoMascot />
+              <Character name="taco-walk" alt="Nacho the taco" />
             </div>
-            <span className="hero-badge">Stretchy pants</span>
+            <Character name="agave" alt="" className="hero-side" />
           </div>
         </div>
       </section>
@@ -216,7 +214,7 @@ export default function App() {
         <div className="feast-grid">
           {feast.map((item) => (
             <article key={item.id}>
-              <div className="feast-art">{mascotFor(item.mascot)}</div>
+              <div className="feast-art">{mascotFor(item.mascot, item.title)}</div>
               <h3>{item.title}</h3>
               <p>{item.detail}</p>
             </article>

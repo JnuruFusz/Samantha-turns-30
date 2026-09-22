@@ -142,29 +142,30 @@ code {
   margin-top: 12px;
 }
 
-.hero-mascot {
-  width: 168px;
-  height: 168px;
-  border-radius: 50%;
-  background: #fff;
-  box-shadow: 0 10px 30px rgba(28, 18, 12, 0.08);
+.character {
+  width: auto;
+  height: auto;
+  object-fit: contain;
 }
 
-.hero-badge {
-  width: 72px;
-  height: 72px;
-  border-radius: 50%;
-  background: #1c120c;
-  color: #fff6e4;
+.hero-mascot {
+  width: 180px;
+  min-height: 200px;
   display: grid;
-  place-items: center;
-  text-align: center;
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  line-height: 1.2;
-  padding: 8px;
+  place-items: end center;
+}
+
+.hero-mascot .character {
+  width: 150px;
+}
+
+.hero-side {
+  width: 88px;
+}
+
+.feast-art .character {
+  width: 130px;
+  height: 150px;
 }
 
 .band {
@@ -588,7 +589,7 @@ textarea {
     justify-items: center;
   }
 
-  .hero-badge {
+  .hero-side {
     display: none;
   }
 

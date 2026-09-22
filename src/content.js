@@ -51,22 +51,22 @@ export const schedule = [
 
 export const feast = [
   {
-    id: 'nachos',
-    title: 'Championship Nachos',
+    id: 'tacos',
+    title: 'Championship Tacos',
     detail: 'The official weigh-in snack. Extra cheese, no apologies.',
-    mascot: 'nachos',
+    mascot: 'taco',
   },
   {
-    id: 'margs',
-    title: 'El Grande Margaritas',
+    id: 'tequila',
+    title: 'El Grande Tequila',
     detail: 'Salt on the rim. Championship energy in the glass.',
-    mascot: 'margarita',
+    mascot: 'tequila',
   },
   {
-    id: 'churros',
-    title: 'Champion Churros',
-    detail: 'Sweet victory, dusted in cinnamon.',
-    mascot: 'churro',
+    id: 'avocado',
+    title: 'Avocado Libre',
+    detail: 'Holy guacamole, now with a skateboard.',
+    mascot: 'avocado',
   },
 ]
 
