@@ -134,16 +134,16 @@ function RsvpForm() {
 
 function Invite() {
   return (
-    <header className="invite">
+    <section className="invite">
       <div className="invite-poster">
         <p className="invite-tag">
           <span className="wide-only">★ Official championship invitation ★</span>
           <span className="narrow-only">★ Heavyweight birthday fiesta ★</span>
         </p>
-        <h1 className="invite-title">
+        <h2 className="invite-title">
           <span>Nacho Average</span>
           <span>30th Fiesta</span>
-        </h1>
+        </h2>
         <div className="invite-bout">
           <div className="invite-mascot">
             <Character name="taco-walk" alt="Nacho the taco" />
@@ -198,7 +198,7 @@ function Invite() {
           <p>Admit one luchador · Ready to rumble!</p>
         </div>
       </div>
-    </header>
+    </section>
   )
 }
 
@@ -207,10 +207,10 @@ function Hero() {
     <section className="hero" id="fiesta">
       <img className="hero-sunburst" src="/sunburst.svg" alt="" />
       <p className="hero-ribbon">★ The main event of the decade ★</p>
-      <h2 className="hero-title">
+      <h1 className="hero-title">
         <span>Nacho Average</span>
         <span>30th Fiesta</span>
-      </h2>
+      </h1>
       <p className="hero-pill">A Nacho Libre-inspired birthday fiesta</p>
       <div className="hero-art">
         <p className="hero-badge gold">Free guaca-mole!</p>
@@ -237,9 +237,9 @@ export default function App() {
         RSVP
       </a>
 
-      <Invite />
-
       <Hero />
+
+      <Invite />
 
       <section className="band cream" id="card">
         <div className="section-head">

@@ -121,7 +121,7 @@ code {
   align-items: center;
   justify-content: center;
   gap: 28px;
-  min-height: 820px;
+  min-height: min(820px, 100vh);
   padding: 48px 48px 56px;
   background: var(--poster-cream);
   border-bottom: 1px solid var(--poster-ink);
