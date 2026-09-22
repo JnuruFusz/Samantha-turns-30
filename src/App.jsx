@@ -1,12 +1,12 @@
 import { useState } from 'react'
 import { feast, gallery, marquee, party, schedule } from './content'
-import { Character, Sunburst, TicketStar } from './illustrations'
+import { Character, TicketStar } from './illustrations'
 
 function encode(data) {
   return new URLSearchParams(data).toString()
 }
 
-function Wordmark({ size = 'hero' }) {
+function Wordmark({ size }) {
   return (
     <p className={`wordmark ${size}`}>
       <span>Nacho Average</span>
@@ -132,6 +132,76 @@ function RsvpForm() {
   )
 }
 
+function Invite() {
+  return (
+    <header className="invite">
+      <div className="invite-poster">
+        <p className="invite-tag">
+          <span className="wide-only">★ Official championship invitation ★</span>
+          <span className="narrow-only">★ Heavyweight birthday fiesta ★</span>
+        </p>
+        <h1 className="invite-title">
+          <span>Nacho Average</span>
+          <span>30th Fiesta</span>
+        </h1>
+        <div className="invite-bout">
+          <div className="invite-mascot">
+            <Character name="taco-walk" alt="Nacho the taco" />
+          </div>
+          <p className="invite-vs" aria-hidden="true">
+            VS
+          </p>
+          <div className="invite-mascot">
+            <Character name="pepper" alt="The chili pepper" />
+          </div>
+        </div>
+        <div className="invite-celebrant">
+          <p>
+            <span className="wide-only">Featuring the heavyweight champion</span>
+            <span className="narrow-only">Starring the champion</span>
+          </p>
+          <p className="invite-name">
+            <span className="wide-only">Samantha turns 30!</span>
+            <span className="narrow-only">Samantha!</span>
+          </p>
+        </div>
+      </div>
+
+      <div className="invite-ticket">
+        <div className="invite-ticket-head">
+          <h2>The Main Event</h2>
+          <p>Fiesta commission licensed</p>
+        </div>
+        <hr />
+        <div className="invite-details">
+          <div>
+            <p className="invite-label">Date &amp; time</p>
+            <p className="invite-value">{party.celebratingLong}</p>
+            <p className="invite-note">{party.time}</p>
+          </div>
+          <div>
+            <p className="invite-label">Arena location</p>
+            <p className="invite-value">The Fiesta Dome</p>
+            <p className="invite-note">{party.location}</p>
+          </div>
+          <div className="invite-attire">
+            <p>★ Attire in the ring ★</p>
+            <p>Lucha libre masks, bright capes, or festive retro party wear highly encouraged!</p>
+          </div>
+        </div>
+        <hr />
+        <div className="invite-cta">
+          <a className="invite-btn" href="#rsvp">
+            <span className="wide-only">Claim your ring spot!</span>
+            <span className="narrow-only">Claim your spot</span>
+          </a>
+          <p>Admit one luchador · Ready to rumble!</p>
+        </div>
+      </div>
+    </header>
+  )
+}
+
 function mascotFor(id, title) {
   return <Character name={id} alt={title} />
 }
@@ -146,20 +216,7 @@ export default function App() {
         RSVP
       </a>
 
-      <section className="hero">
-        <Sunburst className="sunburst" />
-        <div className="hero-copy">
-          <Wordmark />
-          <p className="hero-sub">A Nacho Libre-inspired birthday fiesta</p>
-          <div className="hero-mascot-row">
-            <Character name="pepper" alt="" className="hero-side" />
-            <div className="hero-mascot">
-              <Character name="taco-walk" alt="Nacho the taco" />
-            </div>
-            <Character name="agave" alt="" className="hero-side" />
-          </div>
-        </div>
-      </section>
+      <Invite />
 
       <section className="band cream" id="card">
         <div className="section-head">
