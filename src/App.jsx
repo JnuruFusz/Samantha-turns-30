@@ -1,56 +1,43 @@
 import { useState } from 'react'
-import { chapters, loves, party, sampleNotes } from './content'
+import { feast, gallery, party, schedule } from './content'
+import {
+  ChurroMascot,
+  GuacMascot,
+  SidekickMascot,
+  StarBurst,
+  Sunburst,
+  TacoMascot,
+  WrestlerMascot,
+} from './illustrations'
 
 function encode(data) {
   return new URLSearchParams(data).toString()
 }
 
-function PhotoSlot({ title, hint, className = 'wide' }) {
+function Wordmark({ size = 'hero' }) {
   return (
-    <div className={`photo-slot ${className}`}>
-      <div>
-        <p className="photo-label">{title}</p>
-        <p className="caption">{hint}</p>
-      </div>
-    </div>
+    <p className={`wordmark ${size}`}>
+      <span className="gold">NACHO</span>
+      <span className="red">AVERAGE</span>
+      <span className="gold">30TH</span>
+      <span className="red">FIESTA</span>
+    </p>
   )
 }
 
-function Splash({ onEnter }) {
+function PhotoSlot({ id, title, hint, src, shape = 'wide' }) {
   return (
-    <section className="splash">
-      <header className="splash-top">
-        <span>SE • Thirty</span>
-        <span>October 18</span>
-      </header>
-      <div className="splash-stage">
-        <span className="sparkle s1">✦</span>
-        <span className="sparkle s2">✦</span>
-        <span className="sparkle s3">✦</span>
-        <span className="sparkle s4">✦</span>
-        <span className="sparkle s5">✦</span>
-        <span className="sparkle s6">✦</span>
-        <button className="invite-card" onClick={onEnter} type="button">
-          <div className="invite-card-inner">
-            <p className="eyebrow">Psalm 30 • a celebration of joy</p>
-            <div className="big-30">30</div>
-            <h1 className="invite-title">
-              You&apos;re Invited to
-              <br />
-              Sammi&apos;s Birthday
-            </h1>
-            <p className="invite-sub">— Come Celebrate!</p>
-            <div className="dot-row" aria-hidden="true">
-              <span />
-              <span />
-              <span />
-            </div>
-            <span className="enter-btn">Unfolding the celebration</span>
-          </div>
-        </button>
-      </div>
-      <p className="splash-bottom">“Joy comes in the morning.”</p>
-    </section>
+    <div className={`photo-slot ${shape}${src ? ' filled' : ''}`}>
+      {src ? (
+        <img src={src} alt={title} />
+      ) : (
+        <div className="photo-empty">
+          <p className="photo-label">{title}</p>
+          <p className="caption">{hint}</p>
+          <p className="photo-path">public/photos/{id}.jpg</p>
+        </div>
+      )}
+    </div>
   )
 }
 
@@ -87,7 +74,7 @@ function RsvpForm() {
   if (status === 'sent') {
     return (
       <div className="form success">
-        <h3>You&apos;re on the list.</h3>
+        <h3>You&apos;re on the card.</h3>
         <p>Thank you. We can&apos;t wait to celebrate Samantha with you.</p>
       </div>
     )
@@ -96,11 +83,13 @@ function RsvpForm() {
   return (
     <form className="form" name="rsvp" method="POST" data-netlify="true" onSubmit={handleSubmit}>
       <input type="hidden" name="form-name" value="rsvp" />
+      <input type="hidden" name="attending" value={attending} />
       <p className="sr-only" aria-hidden="true">
         <label>
           Don’t fill this out: <input name="bot-field" tabIndex={-1} />
         </label>
       </p>
+      <p className="gate-label">Official entry gate</p>
       <div className="field-row">
         <label>
           <span>Your name</span>
@@ -134,8 +123,8 @@ function RsvpForm() {
           </select>
         </label>
         <label>
-          <span>Who are you dressing as?</span>
-          <input name="costume" placeholder="Your reality TV alter ego" />
+          <span>Ring name / costume</span>
+          <input name="costume" placeholder="Your reality-TV alter ego" />
         </label>
       </div>
       <label>
@@ -147,70 +136,69 @@ function RsvpForm() {
         <textarea name="message" placeholder="Sweet, funny, or both..." />
       </label>
       <button className="btn" type="submit">
-        Send RSVP
+        Claim your ring spot
       </button>
-      {status === 'error' && (
-        <p>Something went wrong. Try again, or text us your RSVP.</p>
-      )}
+      {status === 'error' && <p>Something went wrong. Try again, or text us your RSVP.</p>}
     </form>
   )
 }
 
-function GuestbookForm() {
-  const [status, setStatus] = useState('idle')
+function mascotFor(id) {
+  if (id === 'guac') return <GuacMascot />
+  if (id === 'churro') return <ChurroMascot />
+  return <TacoMascot />
+}
 
-  async function handleSubmit(event) {
-    event.preventDefault()
-    const form = event.currentTarget
-    try {
-      await fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: encode({
-          'form-name': 'guestbook',
-          from: form.from.value,
-          note: form.note.value,
-        }),
-      })
-      setStatus('sent')
-      form.reset()
-    } catch {
-      setStatus('error')
-    }
-  }
-
-  if (status === 'sent') {
-    return (
-      <div className="form success guestbook-form">
-        <h3>Note saved.</h3>
-        <p>We&apos;ll keep this for Samantha.</p>
-      </div>
-    )
-  }
-
+function Splash({ onEnter }) {
   return (
-    <form className="form guestbook-form" name="guestbook" method="POST" data-netlify="true" onSubmit={handleSubmit}>
-      <input type="hidden" name="form-name" value="guestbook" />
-      <div className="field-row">
-        <label>
-          <span>Your name</span>
-          <input name="from" required placeholder="Who is this from?" />
-        </label>
-        <label>
-          <span>A note for Samantha</span>
-          <input name="note" required placeholder="Sweet, funny, or both..." />
-        </label>
+    <section className="splash">
+      <div className="invite">
+        <div className="invite-art">
+          <Wordmark size="invite" />
+          <div className="invite-mascots">
+            <WrestlerMascot />
+            <SidekickMascot />
+          </div>
+          <p className="invite-banner">Samantha turns 30!</p>
+        </div>
+        <div className="invite-copy">
+          <p className="kicker">The main event</p>
+          <h1>Get off your horse and drink your milk.</h1>
+          <dl className="meta-list">
+            <div>
+              <dt>Who</dt>
+              <dd>{party.name}</dd>
+            </div>
+            <div>
+              <dt>When</dt>
+              <dd>
+                {party.celebrating} · {party.time}
+              </dd>
+            </div>
+            <div>
+              <dt>Where</dt>
+              <dd>{party.location}</dd>
+            </div>
+            <div>
+              <dt>Look</dt>
+              <dd>{party.dressCode}</dd>
+            </div>
+          </dl>
+          <button className="btn" type="button" onClick={onEnter}>
+            Enter the fiesta
+          </button>
+        </div>
       </div>
-      <button className="btn" type="submit">
-        Leave a birthday note
-      </button>
-      {status === 'error' && <p>Could not send just now. Please try again.</p>}
-    </form>
+    </section>
   )
 }
 
 export default function App() {
   const [entered, setEntered] = useState(false)
+  const heroPhoto = gallery.find((item) => item.id === 'hero')
+  const champPhoto = gallery.find((item) => item.id === 'champ')
+  const partyPhoto = gallery.find((item) => item.id === 'party')
+  const storyPhotos = gallery.filter((item) => !['hero', 'champ', 'party'].includes(item.id))
 
   if (!entered) {
     return <Splash onEnter={() => setEntered(true)} />
@@ -219,168 +207,128 @@ export default function App() {
   return (
     <div className="site">
       <header className="topbar">
-        <span>SE • Thirty</span>
-        <span>Psalm 30 • a celebration of joy</span>
+        <span>SE · Thirty</span>
+        <span>Nacho Average 30th</span>
         <a href="#rsvp">RSVP</a>
       </header>
 
-      <section className="hero reveal">
-        <div>
-          <p className="kicker">Psalm 30 • a celebration of joy</p>
-          <h1 className="display">
-            Samantha Elaine
-            <br />
-            Goodwin
-            <br />
-            Turns 30
-          </h1>
-          <p className="lede">
-            Born {party.born} • Celebrating {party.celebrating}
-          </p>
-          <div className="btn-row">
-            <a className="btn" href="#rsvp">
-              RSVP
-            </a>
-            <a className="btn ghost" href="#story">
-              Scroll Her Story ↓
-            </a>
-          </div>
-        </div>
-        <div className="hero-photo">
-          <div className="photo-frame">
-            <div>
-              <p className="photo-label">A favorite photo of Samantha</p>
-              <p className="caption">Drop a portrait in later — this frame is waiting.</p>
-            </div>
+      <section className="hero">
+        <Sunburst className="sunburst" />
+        <div className="hero-copy reveal">
+          <Wordmark />
+          <div className="hero-mascot">
+            {heroPhoto?.src ? (
+              <PhotoSlot {...heroPhoto} />
+            ) : (
+              <>
+                <WrestlerMascot />
+                <p className="hero-photo-hint">Photo slot waiting under Highlight Reel</p>
+              </>
+            )}
           </div>
         </div>
       </section>
 
-      <div className="hero-note">
-        <p>30 years of grace & good stories ♡</p>
-        <p className="verse">“{party.quote}”</p>
-      </div>
-
-      <section className="section" id="story">
+      <section className="band cream" id="card">
         <div className="section-head">
-          <p className="kicker">Her story, so far</p>
-          <h2>Thirty years of becoming</h2>
-          <p>
-            From baby photos to belly laughs, these are a few of the moments that
-            made Samantha, Samantha.
-          </p>
+          <StarBurst />
+          <h2>The Championship Card</h2>
+          <p>A very official fight poster for a very official birthday.</p>
         </div>
-        <div className="timeline">
-          {chapters.map((chapter) => (
-            <article className="chapter" key={chapter.id}>
-              <PhotoSlot
-                title={chapter.title}
-                hint="Add a photo from this season"
-                className={chapter.id === 'faith' || chapter.id === 'thirty' ? 'square' : 'wide'}
-              />
-              <div className="chapter-copy">
-                <p className="kicker">{chapter.number}</p>
-                <h3>{chapter.title}</h3>
-                <p className="lede" style={{ marginBottom: 8 }}>
-                  {chapter.kicker}
-                </p>
-                <p>{chapter.copy}</p>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="section">
-        <div className="section-head">
-          <p className="kicker">A very official list</p>
-          <h2>Things Samantha loves</h2>
-          <p>A little faith, a lot of funk, and just the right amount of reality-TV glam.</p>
-        </div>
-        <div className="loves-grid">
-          {loves.map((item) => (
-            <article className="love-card" key={item.title}>
-              <div className="love-icon">{item.icon}</div>
-              <h3>{item.title}</h3>
-              <p>{item.note}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="invite-band" id="invite">
-        <div className="invite-wrap">
-          <div className="invite-photo">
-            <div>
-              <p className="photo-label" style={{ color: '#fbf7f0' }}>
-                Party photo
-              </p>
-              <p className="caption">A table, a night, a little glam.</p>
-            </div>
-          </div>
-          <div className="invite-card-light">
-            <p className="kicker">Save the date</p>
-            <h2>You&apos;re invited to celebrate Samantha&apos;s 30th</h2>
+        <article className="champ-card">
+          <div className="champ-copy">
+            <p className="kicker">Heavyweight birthday</p>
+            <h3>{party.name} turns 30</h3>
             <dl className="meta-list">
               <div>
-                <dt>Date</dt>
+                <dt>Born</dt>
+                <dd>{party.born}</dd>
+              </div>
+              <div>
+                <dt>Main event</dt>
                 <dd>{party.celebrating}</dd>
               </div>
               <div>
-                <dt>Time</dt>
+                <dt>Bell time</dt>
                 <dd>{party.time}</dd>
               </div>
               <div>
-                <dt>Location</dt>
+                <dt>Arena</dt>
                 <dd>{party.location}</dd>
-              </div>
-              <div>
-                <dt>Dress code</dt>
-                <dd>{party.dressCode}</dd>
               </div>
             </dl>
             <a className="btn" href="#rsvp">
-              RSVP now
+              Claim your ring spot
             </a>
           </div>
+          <PhotoSlot {...champPhoto} />
+        </article>
+      </section>
+
+      <section className="band cyan" id="schedule">
+        <div className="section-head light">
+          <h2>Battle Royale Schedule</h2>
+          <p>Keep your wrists taped and your plate ready.</p>
+        </div>
+        <ol className="schedule">
+          {schedule.map((item, index) => (
+            <li key={item.id}>
+              <span className="badge">{String(index + 1).padStart(2, '0')}</span>
+              <div>
+                <h3>{item.title}</h3>
+                <p>{item.detail}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <section className="band red" id="feast">
+        <div className="section-head light">
+          <h2>El Feast Magnífico</h2>
+          <p>Calories do not count inside the ring.</p>
+        </div>
+        <div className="feast-grid">
+          {feast.map((item) => (
+            <article key={item.id}>
+              <div className="feast-art">{mascotFor(item.mascot)}</div>
+              <h3>{item.title}</h3>
+              <p>{item.detail}</p>
+            </article>
+          ))}
         </div>
       </section>
 
-      <section className="rsvp-section" id="rsvp">
-        <div className="rsvp-copy">
-          <p className="kicker">Will we see you there?</p>
-          <h2>Say yes to the celebration</h2>
+      <section className="band cream" id="photos">
+        <div className="section-head">
+          <h2>The Highlight Reel</h2>
           <p>
-            Bring your best character energy and leave Samantha a note for the
-            next chapter.
+            Photo frames are ready. Add images to <code>public/photos</code>, then set each
+            <code> src </code> in <code>src/content.js</code>.
           </p>
+        </div>
+        <div className="gallery">
+          {storyPhotos.map((photo) => (
+            <PhotoSlot key={photo.id} {...photo} />
+          ))}
+        </div>
+        <PhotoSlot {...partyPhoto} />
+      </section>
+
+      <section className="band cream rsvp-band" id="rsvp">
+        <div className="section-head">
+          <h2>Claim Your Ring Spot</h2>
+          <p>Write your name on the card. Stretchy pants optional. Joy required.</p>
         </div>
         <RsvpForm />
       </section>
 
-      <section className="section">
-        <div className="section-head">
-          <p className="kicker">A keepsake in the making</p>
-          <h2>Sweet notes & funny stories</h2>
-          <p>Leave a birthday note. We can print these for the party later.</p>
-        </div>
-        <div className="notes-grid">
-          {sampleNotes.map((note) => (
-            <article className="note-card" key={note.from}>
-              <p>“{note.quote}”</p>
-              <cite>— {note.from}</cite>
-            </article>
-          ))}
-        </div>
-        <GuestbookForm />
-      </section>
-
       <footer className="site-footer">
-        <p className="kicker">✦</p>
-        <h2 className="footer-title">Joy comes in the morning.</h2>
-        <p>Psalm 30</p>
-        <p>Celebrating Samantha Elaine Goodwin</p>
-        <p>October 14 • October 18</p>
+        <Wordmark size="footer" />
+        <p>“{party.quote}”</p>
+        <p>
+          {party.verse} · {party.born} · {party.celebrating}
+        </p>
       </footer>
     </div>
   )

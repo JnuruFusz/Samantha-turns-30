@@ -8,76 +8,120 @@ export const party = {
   closing: 'Joy comes in the morning.',
   time: 'Add time later',
   location: 'Add location later',
-  dressCode: 'Dress like a character from a reality TV show',
+  dressCode: 'Stretchy pants encouraged. Championship energy required.',
 }
 
-export const chapters = [
+export const schedule = [
+  {
+    id: 'doors',
+    title: 'Doors Open & Nacho Bar',
+    detail: 'Grab a plate. Stretch. Mentally prepare.',
+  },
+  {
+    id: 'welcome',
+    title: 'The Monastery Welcome',
+    detail: 'Hugs, introductions, and one very official toast.',
+  },
+  {
+    id: 'main',
+    title: 'The Main Event',
+    detail: 'Dinner, stories, and Samantha in the center of the ring.',
+  },
+  {
+    id: 'cake',
+    title: 'Championship Cake',
+    detail: 'Thirty candles. One heavyweight birthday girl.',
+  },
+  {
+    id: 'after',
+    title: 'Victory Lap',
+    detail: 'Music, dancing, and leftover nachos if you earned them.',
+  },
+]
+
+export const feast = [
+  {
+    id: 'nachos',
+    title: 'El Supreme Nachos',
+    detail: 'The official weigh-in snack.',
+    mascot: 'taco',
+  },
+  {
+    id: 'guac',
+    title: 'Holy Guacamole',
+    detail: 'Blessed. Extra chips. No sharing required.',
+    mascot: 'guac',
+  },
+  {
+    id: 'churros',
+    title: 'Championship Churros',
+    detail: 'Sweet victory, dusted in cinnamon.',
+    mascot: 'churro',
+  },
+]
+
+export const gallery = [
+  {
+    id: 'hero',
+    title: 'Samantha now',
+    hint: 'Drop a favorite recent photo in public/photos/hero.jpg',
+    src: '',
+    shape: 'round',
+  },
+  {
+    id: 'champ',
+    title: 'Championship portrait',
+    hint: 'A smiling ring-ready photo for the fight card',
+    src: '',
+    shape: 'square',
+  },
   {
     id: 'baby',
-    number: '01',
     title: 'Baby Samantha',
-    kicker: 'A bright beginning',
-    copy: 'Tiny bows, big eyes, and a family already wrapped around her.',
+    hint: 'Add a photo from this season',
+    src: '',
+    shape: 'wide',
   },
   {
     id: 'childhood',
-    number: '02',
     title: 'Childhood Joy',
-    kicker: 'Joy looked like this',
-    copy: 'A spirited girl with a contagious laugh and excellent comedic timing.',
+    hint: 'Add a photo from this season',
+    src: '',
+    shape: 'wide',
   },
   {
     id: 'growing',
-    number: '03',
     title: 'Growing Up',
-    kicker: 'Finding her own rhythm',
-    copy: 'Simple style, loyal friendships, and a soundtrack for every season.',
+    hint: 'Add a photo from this season',
+    src: '',
+    shape: 'wide',
   },
   {
     id: 'faith',
-    number: '04',
     title: 'Faith, Family & Friends',
-    kicker: 'Rooted in love',
-    copy: 'Following Jesus, showing up, and making ordinary days feel special.',
+    hint: 'Add a photo from this season',
+    src: '',
+    shape: 'square',
   },
   {
     id: 'music',
-    number: '05',
     title: 'Love, Laughter & Music',
-    kicker: 'Never skips the good part',
-    copy: 'Funk in the speakers, Charlie Puth on repeat, and one more episode.',
+    hint: 'Add a photo from this season',
+    src: '',
+    shape: 'wide',
   },
   {
     id: 'thirty',
-    number: '06',
     title: '30 Years of Samantha',
-    kicker: 'The morning is full of joy',
-    copy: 'Thirty years loved. Thirty years becoming. The best is still ahead.',
-  },
-]
-
-export const loves = [
-  { icon: '✦', title: 'Jesus', note: 'The center of it all' },
-  { icon: '●', title: 'Forest green', note: 'Obviously' },
-  { icon: '◇', title: 'Reality TV', note: 'Diamonds, drama, delight' },
-  { icon: '⌂', title: 'New Girl', note: 'Comfort-show energy' },
-  { icon: '✺', title: 'Nacho Libre', note: 'For the one-liners' },
-  { icon: '♫', title: 'Funk music', note: 'Always finds the groove' },
-  { icon: '♪', title: 'Charlie Puth', note: 'On repeat' },
-  { icon: '♡', title: 'Simple cute style', note: 'Effortlessly Samantha' },
-]
-
-export const sampleNotes = [
-  {
-    quote: 'You make every room brighter. Happy 30th, Sam! ♡',
-    from: 'Maya',
+    hint: 'Add a photo from this season',
+    src: '',
+    shape: 'square',
   },
   {
-    quote: 'Thirty, flirty, thriving—and still the funniest person we know.',
-    from: 'The girls',
-  },
-  {
-    quote: 'Watching your faith and joy grow has been such a gift.',
-    from: 'Aunt Lisa',
+    id: 'party',
+    title: 'The fiesta table',
+    hint: 'A wide party or tablescape photo',
+    src: '',
+    shape: 'banner',
   },
 ]
