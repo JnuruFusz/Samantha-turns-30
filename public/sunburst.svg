@@ -1,0 +1,21 @@
+<svg width="1440" height="820" viewBox="0 0 1440 820" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_33_226)">
+<rect opacity="0.55" x="540" y="-300" width="60" height="900" fill="#E3B227"/>
+<rect opacity="0.35" x="540" y="-300" width="60" height="900" transform="rotate(13 540 -300)" fill="#C83A2A"/>
+<rect opacity="0.55" x="540" y="-300" width="60" height="900" transform="rotate(26 540 -300)" fill="#E3B227"/>
+<rect opacity="0.35" x="540" y="-300" width="60" height="900" transform="rotate(39 540 -300)" fill="#C83A2A"/>
+<rect opacity="0.55" x="540" y="-300" width="60" height="900" transform="rotate(52 540 -300)" fill="#E3B227"/>
+<rect opacity="0.35" x="540" y="-300" width="60" height="900" transform="rotate(65 540 -300)" fill="#C83A2A"/>
+<rect opacity="0.35" x="540" y="-300" width="60" height="900" transform="rotate(-61 540 -300)" fill="#C83A2A"/>
+<rect opacity="0.55" x="540" y="-300" width="60" height="900" transform="rotate(-48 540 -300)" fill="#E3B227"/>
+<rect opacity="0.35" x="540" y="-300" width="60" height="900" transform="rotate(-35 540 -300)" fill="#C83A2A"/>
+<rect opacity="0.55" x="540" y="-300" width="60" height="900" transform="rotate(-22 540 -300)" fill="#E3B227"/>
+<rect opacity="0.35" x="540" y="-300" width="60" height="900" transform="rotate(-9 540 -300)" fill="#C83A2A"/>
+<ellipse opacity="0.45" cx="720" cy="410" rx="400" ry="310" fill="#FFF5DC"/>
+</g>
+<defs>
+<clipPath id="clip0_33_226">
+<rect width="1440" height="820" fill="white"/>
+</clipPath>
+</defs>
+</svg>
