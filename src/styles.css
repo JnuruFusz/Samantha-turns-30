@@ -111,6 +111,130 @@ code {
   object-fit: contain;
 }
 
+/* Sunburst landing hero under the invite */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  min-height: 820px;
+  padding: 48px 48px 56px;
+  background: var(--poster-cream);
+  border-bottom: 1px solid var(--poster-ink);
+  color: var(--poster-ink);
+  text-align: center;
+}
+
+.hero > * {
+  position: relative;
+  margin: 0;
+}
+
+.hero > .hero-sunburst {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+}
+
+.hero-ribbon {
+  background: var(--poster-teal);
+  color: var(--poster-cream);
+  border: 4px solid var(--poster-ink);
+  border-radius: 12px;
+  box-shadow: 4px 4px 0 var(--poster-ink);
+  padding: 12px 24px;
+  font-family: var(--poster-sans);
+  font-size: 14px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.hero-title {
+  display: grid;
+  gap: 4px;
+  font-family: var(--poster);
+  font-weight: 400;
+  line-height: 0.88;
+  text-transform: uppercase;
+  text-shadow: 6px 6px 0 var(--poster-ink), -2px -2px 0 var(--poster-ink);
+}
+
+.hero-title span:first-child {
+  color: var(--poster-red);
+  font-size: clamp(40px, 8.2vw, 118px);
+}
+
+.hero-title span:last-child {
+  color: var(--poster-gold);
+  font-size: clamp(48px, 9.7vw, 140px);
+}
+
+.hero-pill {
+  background: var(--poster-ink);
+  color: var(--poster-cream);
+  border-radius: 8px;
+  padding: 10px 28px;
+  font-family: var(--poster-sans);
+  font-size: 20px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.hero-art {
+  display: flex;
+  align-items: center;
+  gap: 48px;
+}
+
+.hero-mascot {
+  width: 260px;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  background: #fbeed6;
+  border: 5px solid var(--poster-ink);
+  border-radius: 50%;
+  box-shadow: 8px 8px 0 var(--poster-ink);
+}
+
+.hero-mascot .character {
+  width: 58%;
+  height: 72%;
+}
+
+.hero-badge {
+  width: 130px;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  padding: 8px;
+  border: 4px solid var(--poster-ink);
+  border-radius: 50%;
+  box-shadow: 4px 4px 0 var(--poster-ink);
+  font-family: var(--poster);
+  font-size: 15px;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.hero-badge.gold {
+  background: var(--poster-gold);
+  transform: rotate(-15deg) translateY(40px);
+}
+
+.hero-badge.red {
+  background: var(--poster-red);
+  color: var(--poster-cream);
+  transform: rotate(15deg);
+}
+
 /* Poster + ticket invite at the top of the page */
 
 .invite {
@@ -799,6 +923,46 @@ textarea {
 }
 
 @media (max-width: 860px) {
+  .hero {
+    min-height: 0;
+    gap: 20px;
+    padding: 56px 20px 48px;
+  }
+
+  .hero-title {
+    text-shadow: 4px 4px 0 var(--poster-ink), -1px -1px 0 var(--poster-ink);
+  }
+
+  .hero-ribbon {
+    padding: 8px 16px;
+    font-size: 12px;
+  }
+
+  .hero-pill {
+    padding: 8px 14px;
+    font-size: 12px;
+  }
+
+  .hero-art {
+    gap: 12px;
+  }
+
+  .hero-mascot {
+    width: 160px;
+    border-width: 4px;
+    box-shadow: 6px 6px 0 var(--poster-ink);
+  }
+
+  .hero-badge {
+    width: 84px;
+    border-width: 3px;
+    font-size: 11px;
+  }
+
+  .hero-badge.gold {
+    transform: rotate(-15deg) translateY(24px);
+  }
+
   .rsvp-chip {
     top: auto;
     bottom: 18px;

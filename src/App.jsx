@@ -202,6 +202,27 @@ function Invite() {
   )
 }
 
+function Hero() {
+  return (
+    <section className="hero" id="fiesta">
+      <img className="hero-sunburst" src="/sunburst.svg" alt="" />
+      <p className="hero-ribbon">★ The main event of the decade ★</p>
+      <h2 className="hero-title">
+        <span>Nacho Average</span>
+        <span>30th Fiesta</span>
+      </h2>
+      <p className="hero-pill">A Nacho Libre-inspired birthday fiesta</p>
+      <div className="hero-art">
+        <p className="hero-badge gold">Free guaca-mole!</p>
+        <div className="hero-mascot">
+          <Character name="taco-walk" alt="Nacho the taco" />
+        </div>
+        <p className="hero-badge red">Dance battle!</p>
+      </div>
+    </section>
+  )
+}
+
 function mascotFor(id, title) {
   return <Character name={id} alt={title} />
 }
@@ -217,6 +238,8 @@ export default function App() {
       </a>
 
       <Invite />
+
+      <Hero />
 
       <section className="band cream" id="card">
         <div className="section-head">
