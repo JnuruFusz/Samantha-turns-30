@@ -79,10 +79,13 @@ function RsvpForm() {
           Don’t fill this out: <input name="bot-field" tabIndex={-1} />
         </label>
       </p>
-      <p className="gate-label">Official entry gate</p>
-      <p className="gate-sub">Fiesta commission licensed registration</p>
+      <div className="gate-head">
+        <p className="gate-label">Official entry gate</p>
+        <p className="gate-sub">Fiesta commission licensed registration</p>
+      </div>
+      <hr />
       <label>
-        <span>Announce your name</span>
+        <span>Luchador name (your name)</span>
         <input name="name" required placeholder="First and last name" />
       </label>
       <div className="field-row">
@@ -102,11 +105,11 @@ function RsvpForm() {
           </div>
         </div>
         <label>
-          <span>How many in your party?</span>
+          <span>Tag-team size (total guests)</span>
           <select name="guests" defaultValue="1">
             {[1, 2, 3, 4, 5, 6].map((n) => (
               <option key={n} value={n}>
-                {n}
+                {n === 1 ? 'Just me (solo wrestler)' : `${n} luchadores`}
               </option>
             ))}
           </select>
@@ -125,7 +128,7 @@ function RsvpForm() {
         <textarea name="message" placeholder="Sweet, funny, or both..." />
       </label>
       <button className="btn" type="submit">
-        Book your spot
+        Book my ring spot!
       </button>
       {status === 'error' && <p>Something went wrong. Try again, or text us your RSVP.</p>}
     </form>
@@ -176,7 +179,7 @@ function Invite() {
         <div className="invite-details">
           <div>
             <p className="invite-label">Date &amp; time</p>
-            <p className="invite-value">{party.celebratingLong}</p>
+            <p className="invite-value">{party.celebratingShort}</p>
             <p className="invite-note">{party.time}</p>
           </div>
           <div>
@@ -244,18 +247,23 @@ export default function App() {
       <section className="band cream" id="card">
         <div className="section-head">
           <h2>The Championship Card</h2>
-          <p>Inside the details of the main event.</p>
+          <p>Behold the details of the century</p>
         </div>
         <article className="ticket">
           <div className="ticket-main">
-            <p className="kicker">Heavyweight birthday clash</p>
-            <h3>{party.name} turns 30</h3>
+            <div>
+              <h3>Heavyweight birthday clash</h3>
+              <p className="kicker">Starring the birthday champion</p>
+            </div>
+            <hr />
             <div className="ticket-meta">
               <div>
-                <strong>{party.celebratingLong}</strong>
+                <span className="ticket-label">When / date</span>
+                <strong>{party.celebratingShort}</strong>
                 <span>{party.time}</span>
               </div>
               <div>
+                <span className="ticket-label">Where / arena</span>
                 <strong>The Fiesta Dome</strong>
                 <span>{party.location}</span>
               </div>
@@ -264,6 +272,7 @@ export default function App() {
           <div className="ticket-stub">
             <p>Admit one</p>
             <TicketStar />
+            <p className="ticket-number">№ 00030</p>
           </div>
         </article>
       </section>
@@ -271,12 +280,15 @@ export default function App() {
       <section className="band cyan" id="schedule">
         <div className="section-head light">
           <h2>Battle Royale Schedule</h2>
-          <p>A blow-by-blow itinerary of the fiesta.</p>
+          <p>A blow-by-blow itinerary of the fiesta</p>
         </div>
         <ol className="schedule">
           {schedule.map((item) => (
-            <li key={item.id} className={item.featured ? 'featured' : ''}>
+            <li key={item.id}>
               <span className="time">{item.time}</span>
+              <span className="schedule-icon">
+                <Character name={item.mascot} alt="" />
+              </span>
               <div>
                 <h3>{item.title}</h3>
                 <p>{item.detail}</p>
@@ -289,14 +301,16 @@ export default function App() {
       <section className="band red" id="feast">
         <div className="section-head light">
           <h2>El Feast Magnífico</h2>
-          <p>Calories do not count inside the ring.</p>
+          <p>Wrestling-grade fuel for the warriors</p>
         </div>
         <div className="feast-grid">
           {feast.map((item) => (
             <article key={item.id}>
               <div className="feast-art">{mascotFor(item.mascot, item.title)}</div>
-              <h3>{item.title}</h3>
-              <p>{item.detail}</p>
+              <div className="feast-body">
+                <h3>{item.title}</h3>
+                <p>{item.detail}</p>
+              </div>
             </article>
           ))}
         </div>
@@ -305,7 +319,10 @@ export default function App() {
       <div className="marquee" aria-hidden="true">
         <div className="marquee-track">
           {[...marquee, ...marquee, ...marquee].map((item, index) => (
-            <span key={`${item}-${index}`}>{item}</span>
+            <span key={`${item}-${index}`}>
+              {item}
+              <span className="marquee-star">★</span>
+            </span>
           ))}
         </div>
       </div>
@@ -329,7 +346,7 @@ export default function App() {
       <section className="band cream rsvp-band" id="rsvp">
         <div className="section-head">
           <h2>Claim Your Ring Spot</h2>
-          <p>Register your wrestling identity.</p>
+          <p>Register your wrestling tag-team status</p>
         </div>
         <RsvpForm />
       </section>

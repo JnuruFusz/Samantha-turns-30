@@ -4,9 +4,18 @@ export function Character({ name, alt, className = '' }) {
 
 export function TicketStar({ className = '' }) {
   return (
-    <svg className={className} viewBox="0 0 48 48" width="48" height="48" aria-hidden="true">
-      <circle cx="24" cy="24" r="22" fill="#FFFDF8" />
-      <path d="M24 10 27 20h10l-8 6 3 10-8-6-8 6 3-10-8-6h10z" fill="#F4C43A" />
+    <svg className={className} viewBox="0 0 100 100" width="100" height="100" aria-hidden="true">
+      <circle cx="50" cy="50" r="48" fill="none" stroke="#2D1E1B" strokeWidth="3" />
+      <path
+        d="M50 18 58.8 38.2 80.4 40.1 64.2 54.6 69 76 50 64.8 31 76 35.8 54.6 19.6 40.1 41.2 38.2Z"
+        fill="none"
+        stroke="#2D1E1B"
+        strokeWidth="3"
+        strokeLinejoin="round"
+      />
+      <text x="50" y="56" textAnchor="middle" fontFamily="'Dela Gothic One', sans-serif" fontSize="10" fill="#2D1E1B">
+        30
+      </text>
     </svg>
   )
 }
