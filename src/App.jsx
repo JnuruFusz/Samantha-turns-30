@@ -406,8 +406,8 @@ function Invite() {
           <p className="invite-vs" aria-hidden="true">
             VS
           </p>
-          <div className="invite-mascot">
-            <Character name="pepper" alt="The chili pepper" />
+          <div className="invite-mascot is-art">
+            <img src="/art/chili-champ.png" alt="The chili pepper champ, flexing" />
           </div>
         </div>
         <div className="invite-celebrant">
@@ -568,8 +568,8 @@ export default function App() {
           {schedule.map((item) => (
             <li key={item.id}>
               <span className="time">{item.time}</span>
-              <span className="schedule-icon">
-                <Character name={item.mascot} alt="" />
+              <span className={`schedule-icon${item.icon ? ' is-art' : ''}`}>
+                {item.icon ? <img src={item.icon} alt="" /> : <Character name={item.mascot} alt="" />}
               </span>
               <div>
                 <h3>{item.title}</h3>
@@ -588,7 +588,13 @@ export default function App() {
         <div className="feast-grid">
           {feast.map((item) => (
             <article key={item.id}>
-              <div className="feast-art">{mascotFor(item.mascot, item.title)}</div>
+              <div className="feast-art">
+                {item.art ? (
+                  <img className="feast-illustration" src={item.art} alt={item.title} loading="lazy" />
+                ) : (
+                  mascotFor(item.mascot, item.title)
+                )}
+              </div>
               <div className="feast-body">
                 <h3>{item.title}</h3>
                 <p>{item.detail}</p>

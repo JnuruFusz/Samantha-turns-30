@@ -45,7 +45,7 @@ export const schedule = [
     time: '4:30 PM',
     title: 'The Grand Entrance',
     detail: 'Behold the birthday champ as they make a glorious, masked arrival under dramatic fog.',
-    mascot: 'taco-walk',
+    icon: '/art/grand-entrance.png',
   },
   {
     id: 'dance',
@@ -59,7 +59,7 @@ export const schedule = [
     time: '6:30 PM',
     title: 'Cake Smash Championship',
     detail: 'Wrestling-level cake cutting ceremony. Will there be a wrestling smash? Be ready for anything.',
-    mascot: 'agave',
+    icon: '/art/cake-smash.png',
   },
   {
     id: 'after',
@@ -72,10 +72,10 @@ export const schedule = [
 
 export const feast = [
   {
-    id: 'tacos',
-    title: 'Championship Tacos',
-    detail: 'The official weigh-in snack. Extra cheese, no apologies.',
-    mascot: 'taco',
+    id: 'nachos',
+    title: 'Championship Nachos',
+    detail: 'Crispy tortilla chips drowned in warm, legendary liquid cheese, jalapeños, and spiced crema.',
+    art: '/art/nachos.jpg',
   },
   {
     id: 'lemonade',
@@ -84,10 +84,10 @@ export const feast = [
     mascot: 'lemonade',
   },
   {
-    id: 'avocado',
-    title: 'Avocado Libre',
-    detail: 'Holy guacamole, now with a skateboard.',
-    mascot: 'avocado',
+    id: 'churros',
+    title: 'Champion Churros',
+    detail: 'Deep-fried golden pastry sticks rolled in thick cinnamon sugar, served with molten chocolate dip.',
+    art: '/art/churros.jpg',
   },
 ]
 
