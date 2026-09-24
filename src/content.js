@@ -81,7 +81,7 @@ export const feast = [
     id: 'lemonade',
     title: 'El Grande Lemonade',
     detail: 'Fresh lemonade, sodas, and ice-cold water to keep every luchador hydrated.',
-    mascot: 'lemonade',
+    art: '/art/lemonade-scene.svg',
   },
   {
     id: 'churros',
