@@ -145,7 +145,7 @@ export const story = [
     id: 'home-crowd',
     chapter: 'Chapter 7',
     title: 'Home Crowd Hero',
-    caption: 'Cardinals red from cap to jersey, cheering with her littlest tag-team partner.',
+    caption: 'Cardinals red from cap to jersey, cheering with her daughter Ezzy, the littlest tag-team partner.',
     src: '/photos/07-home-crowd.jpg',
   },
 ]
