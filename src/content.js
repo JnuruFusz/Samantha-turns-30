@@ -38,7 +38,7 @@ export const schedule = [
     time: '3:30 PM',
     title: 'Doors Open & Nachos Bar',
     detail: 'Arrive in disguise and build your high-piled warm nacho plates at our custom loading dock.',
-    mascot: 'taco',
+    icon: '/art/nacho-chip.png',
   },
   {
     id: 'entrance',
@@ -52,7 +52,7 @@ export const schedule = [
     time: '5:30 PM',
     title: 'Dance Battle Royale',
     detail: 'Step into the ring. Our resident DJ drops retro latin beats for an epic dance-off championship.',
-    mascot: 'pepper',
+    icon: '/art/dj-record.png',
   },
   {
     id: 'cake',

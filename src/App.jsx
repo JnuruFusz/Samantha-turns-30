@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { feast, links, marquee, party, ringNameParts, schedule, story } from './content'
-import { Bolt, Character, LuchaMask, TicketStar } from './illustrations'
+import { Bolt, Character, TicketStar } from './illustrations'
 
 function encode(data) {
   return new URLSearchParams(data).toString()
@@ -286,7 +286,7 @@ function Welcome({ sectionRef }) {
             <small>Lemonade &amp; sodas</small>
           </p>
           <div className="welcome-mask">
-            <LuchaMask />
+            <img src="/art/lucha-mask.png" alt="A red and blue lucha libre mask" />
           </div>
           <p className="welcome-badge">
             Best costume
@@ -400,8 +400,9 @@ function Invite() {
           <span>30th Fiesta</span>
         </h2>
         <div className="invite-bout">
-          <div className="invite-mascot">
-            <Character name="taco-walk" alt="Nacho the taco" />
+          <div className="invite-mascot invite-taco">
+            <Character name="taco-walk" alt="Nacho the taco" className="wide-only" />
+            <img className="narrow-only" src="/art/masked-taco-thumbs.png" alt="The masked taco luchador, thumbs up" />
           </div>
           <p className="invite-vs" aria-hidden="true">
             VS
@@ -471,8 +472,8 @@ function Hero() {
       <p className="hero-pill">A Nacho Libre-inspired birthday fiesta</p>
       <div className="hero-art">
         <p className="hero-badge gold">Free guaca-mole!</p>
-        <div className="hero-mascot">
-          <Character name="taco-walk" alt="Nacho the taco" />
+        <div className="hero-mascot is-art">
+          <img src="/art/masked-taco-walk.png" alt="The masked taco luchador strutting in" />
         </div>
         <p className="hero-badge red">Dance battle!</p>
       </div>
