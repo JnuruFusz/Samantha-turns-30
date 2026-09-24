@@ -400,8 +400,8 @@ function Invite() {
           <span>30th Fiesta</span>
         </h2>
         <div className="invite-bout">
-          <div className="invite-mascot invite-taco">
-            <Character name="taco-walk" alt="Nacho the taco" className="wide-only" />
+          <div className="invite-mascot is-art invite-taco">
+            <img className="wide-only" src="/art/boxing-taco.png" alt="The masked taco luchador, gloves up" />
             <img className="narrow-only" src="/art/masked-taco-thumbs.png" alt="The masked taco luchador, thumbs up" />
           </div>
           <p className="invite-vs" aria-hidden="true">

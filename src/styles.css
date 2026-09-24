@@ -1856,14 +1856,6 @@ textarea {
   }
 
   /* On phones the thumbs-up taco card brings its own frame and 5px shadow (155px for a 150px card). */
-  .invite-taco {
-    background: none;
-    border: 0;
-    border-radius: 0;
-    box-shadow: none;
-    overflow: visible;
-  }
-
   .invite-taco img.narrow-only {
     display: block;
     width: calc(100% * 155 / 150);
