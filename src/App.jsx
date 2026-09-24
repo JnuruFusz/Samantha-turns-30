@@ -319,6 +319,74 @@ function Welcome({ sectionRef }) {
   )
 }
 
+// Chapters appear in order as guests scroll, like watching Sammi grow up. On phones a
+// rope line down the middle fills in behind them. Without motion, everything just shows.
+function StoryReel() {
+  const listRef = useRef(null)
+  const [animated, setAnimated] = useState(false)
+  const [seen, setSeen] = useState(() => new Set())
+
+  useEffect(() => {
+    if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return undefined
+    }
+    const list = listRef.current
+    setAnimated(true)
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue
+          observer.unobserve(entry.target)
+          setSeen((current) => new Set(current).add(entry.target.dataset.id))
+        }
+      },
+      { threshold: 0.25 },
+    )
+    list.querySelectorAll('.story-card').forEach((card) => observer.observe(card))
+
+    let frame = 0
+    const update = () => {
+      frame = 0
+      const box = list.getBoundingClientRect()
+      const progress = Math.min(1, Math.max(0, (window.innerHeight * 0.6 - box.top) / box.height))
+      list.style.setProperty('--progress', progress.toFixed(3))
+    }
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update)
+    }
+    update()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+    return () => {
+      observer.disconnect()
+      cancelAnimationFrame(frame)
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+    }
+  }, [])
+
+  return (
+    <ol className={`story${animated ? ' is-animated' : ''}`} ref={listRef}>
+      {story.map((item, index) => (
+        <li
+          key={item.id}
+          data-id={item.id}
+          className={`story-card${seen.has(item.id) ? ' is-in' : ''}`}
+          style={{ '--delay': `${(index % 4) * 120}ms` }}
+        >
+          <img src={item.src} alt={`${party.nickname}: ${item.title}`} loading="lazy" />
+          <div className="story-text">
+            <p className="story-chapter">{item.chapter}</p>
+            <h3>{item.title}</h3>
+            <p>{item.caption}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  )
+}
+
 function Invite() {
   return (
     <section className="invite">
@@ -546,21 +614,7 @@ export default function App() {
           <h2>The Highlight Reel</h2>
           <p>30 years of {party.nickname}, round by round</p>
         </div>
-        <ol className="story">
-          {story.map((item) => (
-            <li key={item.id} className="story-card">
-              <img src={item.src} alt={`${party.nickname}: ${item.title}`} loading="lazy" />
-              <div className="story-text">
-                <p className="story-chapter">{item.chapter}</p>
-                <h3>{item.title}</h3>
-                <p>{item.caption}</p>
-              </div>
-            </li>
-          ))}
-        </ol>
-        <p className="story-swipe" aria-hidden="true">
-          Swipe for more →
-        </p>
+        <StoryReel />
         <a className="btn story-cta" href="#rsvp">
           RSVP for the party
         </a>
