@@ -19,14 +19,14 @@ const address = `${party.street}, ${party.city}`
 export const links = {
   directions: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`,
   registry: 'https://www.amazon.com/registries/gl/guest-view/3QLYAL7CAAWON',
-  // Keep public/sammi-30th.ics in step with these times (3:30–8:30 PM Central, Oct 18 2026).
+  // Keep public/sammi-30th.ics in step with these times (3:30–9:00 PM Central, Oct 18 2026).
   calendarFile: '/sammi-30th.ics',
   googleCalendar:
     'https://calendar.google.com/calendar/render?' +
     new URLSearchParams({
       action: 'TEMPLATE',
       text: "Sammi's Nacho Average 30th Fiesta",
-      dates: '20261018T203000Z/20261019T013000Z',
+      dates: '20261018T203000Z/20261019T020000Z',
       location: address,
       details: 'Lucha masks and capes encouraged! RSVP and details: https://sammibirthday.netlify.app',
     }).toString(),
