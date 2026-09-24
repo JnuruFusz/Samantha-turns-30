@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { feast, gallery, links, marquee, party, schedule } from './content'
+import { feast, links, marquee, party, ringNameParts, schedule, story } from './content'
 import { Bolt, Character, LuchaMask, TicketStar } from './illustrations'
 
 function encode(data) {
@@ -13,22 +13,6 @@ function Wordmark({ size }) {
       <span>Nacho Average</span>
       <span>30th Fiesta</span>
     </p>
-  )
-}
-
-function PhotoSlot({ id, title, hint, src, shape = 'wide' }) {
-  return (
-    <div className={`photo-slot ${shape}${src ? ' filled' : ''}`}>
-      {src ? (
-        <img src={src} alt={title} />
-      ) : (
-        <div className="photo-empty">
-          <p className="photo-label">{title}</p>
-          <p className="caption">{hint}</p>
-          <p className="photo-path">public/photos/{id}.jpg</p>
-        </div>
-      )}
-    </div>
   )
 }
 
@@ -141,9 +125,21 @@ function Address() {
   )
 }
 
+function pick(list) {
+  return list[Math.floor(Math.random() * list.length)]
+}
+
+function rollRingName(current) {
+  const { titles, firsts, lasts } = ringNameParts
+  let name = current
+  while (name === current) name = `${pick(titles)} ${pick(firsts)} ${pick(lasts)}`
+  return name
+}
+
 function RsvpForm() {
   const [attending, setAttending] = useState('Yes')
   const [status, setStatus] = useState('idle')
+  const [ringName, setRingName] = useState('')
 
   async function handleSubmit(event) {
     event.preventDefault()
@@ -166,6 +162,7 @@ function RsvpForm() {
       })
       setStatus('sent')
       form.reset()
+      setRingName('')
     } catch {
       setStatus('error')
     }
@@ -202,7 +199,7 @@ function RsvpForm() {
       </div>
       <hr />
       <label>
-        <span>Luchador name (your name)</span>
+        <span>Your name</span>
         <input name="name" required placeholder="First and last name" />
       </label>
       <div className="field-row">
@@ -232,10 +229,23 @@ function RsvpForm() {
           </select>
         </label>
       </div>
-      <label>
-        <span>Ring name / disguise</span>
-        <input name="costume" placeholder="Optional" />
-      </label>
+      <div>
+        <div className="ring-name-head">
+          <label className="field-label" htmlFor="ring-name">
+            Ring name
+          </label>
+          <button type="button" className="roll-btn" onClick={() => setRingName(rollRingName(ringName))}>
+            <span aria-hidden="true">🎲</span> Roll one
+          </button>
+        </div>
+        <input
+          id="ring-name"
+          name="costume"
+          placeholder="Optional, or tap Roll one"
+          value={ringName}
+          onChange={(event) => setRingName(event.target.value)}
+        />
+      </div>
       <label>
         <span>Food notes</span>
         <input name="notes" placeholder="Allergies or anything we should know" />
@@ -254,7 +264,7 @@ function RsvpForm() {
 
 function Welcome({ sectionRef }) {
   return (
-    <section className="welcome" id="welcome" ref={sectionRef}>
+    <section className="welcome" id="welcome" ref={sectionRef} data-chip-watch="welcome">
       <p className="welcome-bg" aria-hidden="true">
         Gran lucha libre · Gran lucha libre · Gran lucha libre
       </p>
@@ -272,8 +282,8 @@ function Welcome({ sectionRef }) {
         <p className="welcome-sub">A Nacho Libre-inspired birthday fiesta</p>
         <div className="welcome-art">
           <p className="welcome-badge">
-            Free margs
-            <small>Flowing all night</small>
+            Cold drinks
+            <small>Lemonade &amp; sodas</small>
           </p>
           <div className="welcome-mask">
             <LuchaMask />
@@ -293,7 +303,7 @@ function Welcome({ sectionRef }) {
           <a className="welcome-btn primary" href="#rsvp">
             RSVP now
           </a>
-          <a className="welcome-btn secondary" href="#fiesta">
+          <a className="welcome-btn secondary" href="#story">
             See {party.nickname}&apos;s story ↓
           </a>
         </div>
@@ -306,6 +316,74 @@ function Welcome({ sectionRef }) {
         </p>
       </div>
     </section>
+  )
+}
+
+// Chapters appear in order as guests scroll, like watching Sammi grow up. On phones a
+// rope line down the middle fills in behind them. Without motion, everything just shows.
+function StoryReel() {
+  const listRef = useRef(null)
+  const [animated, setAnimated] = useState(false)
+  const [seen, setSeen] = useState(() => new Set())
+
+  useEffect(() => {
+    if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return undefined
+    }
+    const list = listRef.current
+    setAnimated(true)
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue
+          observer.unobserve(entry.target)
+          setSeen((current) => new Set(current).add(entry.target.dataset.id))
+        }
+      },
+      { threshold: 0.25 },
+    )
+    list.querySelectorAll('.story-card').forEach((card) => observer.observe(card))
+
+    let frame = 0
+    const update = () => {
+      frame = 0
+      const box = list.getBoundingClientRect()
+      const progress = Math.min(1, Math.max(0, (window.innerHeight * 0.6 - box.top) / box.height))
+      list.style.setProperty('--progress', progress.toFixed(3))
+    }
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update)
+    }
+    update()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+    return () => {
+      observer.disconnect()
+      cancelAnimationFrame(frame)
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+    }
+  }, [])
+
+  return (
+    <ol className={`story${animated ? ' is-animated' : ''}`} ref={listRef}>
+      {story.map((item, index) => (
+        <li
+          key={item.id}
+          data-id={item.id}
+          className={`story-card${seen.has(item.id) ? ' is-in' : ''}`}
+          style={{ '--delay': `${(index % 4) * 120}ms` }}
+        >
+          <img src={item.src} alt={`${party.nickname}: ${item.title}`} loading="lazy" />
+          <div className="story-text">
+            <p className="story-chapter">{item.chapter}</p>
+            <h3>{item.title}</h3>
+            <p>{item.caption}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
   )
 }
 
@@ -407,25 +485,35 @@ function mascotFor(id, title) {
 }
 
 export default function App() {
-  const storyPhotos = gallery.filter((item) => item.id !== 'party')
-  const partyPhoto = gallery.find((item) => item.id === 'party')
   const welcomeRef = useRef(null)
-  const [onWelcome, setOnWelcome] = useState(true)
+  const rsvpRef = useRef(null)
+  const [visible, setVisible] = useState({ welcome: true, rsvp: false })
+  const hideChip = visible.welcome || visible.rsvp
 
-  // The welcome screen has its own RSVP button, so the floating chip waits until it scrolls away.
+  // The floating RSVP chip is redundant on the welcome screen (it has its own button) and on the form itself.
   useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => setOnWelcome(entry.isIntersecting), {
-      threshold: 0.35,
-    })
+    const observer = new IntersectionObserver(
+      (entries) => {
+        setVisible((current) => {
+          const next = { ...current }
+          for (const entry of entries) next[entry.target.dataset.chipWatch] = entry.isIntersecting
+          return next
+        })
+      },
+      { threshold: 0.2 },
+    )
     observer.observe(welcomeRef.current)
+    observer.observe(rsvpRef.current)
     return () => observer.disconnect()
   }, [])
 
   return (
     <div className="site">
-      <a className={`rsvp-chip${onWelcome ? ' is-hidden' : ''}`} href="#rsvp"
-        aria-hidden={onWelcome}
-        tabIndex={onWelcome ? -1 : undefined}
+      <a
+        className={`rsvp-chip${hideChip ? ' is-hidden' : ''}`}
+        href="#rsvp"
+        aria-hidden={hideChip}
+        tabIndex={hideChip ? -1 : undefined}
       >
         RSVP
       </a>
@@ -521,23 +609,18 @@ export default function App() {
         </div>
       </div>
 
-      <section className="band cream" id="photos">
+      <section className="band cream" id="story">
         <div className="section-head">
           <h2>The Highlight Reel</h2>
-          <p>
-            Photo frames are ready. Add images to <code>public/photos</code>, then set each
-            <code> src </code> in <code>src/content.js</code>.
-          </p>
+          <p>30 years of {party.nickname}, round by round</p>
         </div>
-        <div className="gallery">
-          {storyPhotos.map((photo) => (
-            <PhotoSlot key={photo.id} {...photo} />
-          ))}
-        </div>
-        <PhotoSlot {...partyPhoto} />
+        <StoryReel />
+        <a className="btn story-cta" href="#rsvp">
+          RSVP for the party
+        </a>
       </section>
 
-      <section className="band cream rsvp-band" id="rsvp">
+      <section className="band cream rsvp-band" id="rsvp" ref={rsvpRef} data-chip-watch="rsvp">
         <div className="section-head">
           <h2>Claim Your Ring Spot</h2>
           <p>Register your wrestling tag-team status</p>

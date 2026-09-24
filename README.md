@@ -23,17 +23,8 @@ RSVPs show up in Netlify → Forms.
 
 ## Adding photos
 
-Photo frames are already on the page. To fill one:
+The Highlight Reel tells Sammi's story one chapter at a time, oldest first.
 
-1. Drop the image in `public/photos/` using the filename shown on the frame, for example `hero.jpg` or `baby.jpg`.
-2. Open `src/content.js` and set that item's `src` to `/photos/your-file.jpg`.
+1. Drop the photo in `public/photos/`, for example `06-new-chapter.jpg`.
+2. Add a chapter to `story` in `src/content.js` with its `title`, `caption`, and `src`.
 
-Frames waiting:
-
-- `baby`, `childhood`, `growing`, `faith`, `music`, `thirty` — highlight reel
-- `party` — wide fiesta / table photo
-
-## Still needed
-
-- Party time and address
-- Photos for the highlight reel

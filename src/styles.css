@@ -743,9 +743,7 @@ code {
   background: var(--poster-red);
 }
 
-.section-head,
-.gallery,
-.photo-slot.banner {
+.section-head {
   width: min(980px, 100%);
   margin-left: auto;
   margin-right: auto;
@@ -1066,58 +1064,100 @@ code {
   }
 }
 
-.gallery {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  margin-bottom: 16px;
-}
+/* The Highlight Reel: Sammi's story */
 
-.photo-slot {
-  background: var(--paper);
-  border: 1px dashed rgba(28, 18, 12, 0.25);
-  overflow: hidden;
-  display: grid;
-  place-items: center;
-  text-align: center;
-  min-height: 200px;
-  padding: 20px;
-  border-radius: 24px;
-}
-
-.photo-slot.filled {
-  border-style: solid;
+.story {
+  width: min(960px, 100%);
+  margin: 0 auto;
   padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 28px;
 }
 
-.photo-slot.filled img {
+.story-card {
+  width: 210px;
+  display: grid;
+  align-content: start;
+  background: var(--poster-cream);
+  border: 4px solid var(--poster-ink);
+  border-radius: 16px;
+  box-shadow: 6px 6px 0 var(--poster-ink);
+  overflow: hidden;
+}
+
+.story-card {
+  --tilt: -1.2deg;
+  --enter-x: 0px;
+  transform: rotate(var(--tilt));
+}
+
+.story-card:nth-child(even) {
+  --tilt: 1.2deg;
+}
+
+/* Scroll reveal: added by StoryReel only when motion is allowed. */
+.story.is-animated .story-card {
+  opacity: 0;
+  transform: translate(var(--enter-x), 48px) rotate(0deg) scale(0.96);
+  transition:
+    opacity 600ms ease,
+    transform 700ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition-delay: var(--delay, 0ms);
+}
+
+.story.is-animated .story-card.is-in {
+  opacity: 1;
+  transform: rotate(var(--tilt));
+}
+
+.story-card img {
   width: 100%;
-  height: 100%;
+  aspect-ratio: 3 / 4;
   object-fit: cover;
+  border-bottom: 4px solid var(--poster-ink);
 }
 
-.photo-slot.wide {
-  aspect-ratio: 16 / 10;
+.story-text {
+  display: grid;
+  gap: 4px;
+  padding: 14px 16px 18px;
 }
 
-.photo-slot.square {
-  aspect-ratio: 1;
+.story-text p {
+  margin: 0;
 }
 
-.photo-slot.banner {
-  aspect-ratio: 16 / 6;
-}
-
-.photo-label {
-  font-family: var(--display);
-  font-size: 22px;
-  margin: 0 0 6px;
+.story-chapter {
+  color: var(--poster-red);
+  font-family: var(--poster-sans);
+  font-size: 12px;
+  font-weight: 900;
   text-transform: uppercase;
 }
 
-.photo-path {
-  margin: 10px 0 0;
-  color: var(--red);
+.story-text h3 {
+  margin: 0;
+  font-family: var(--poster);
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.15;
+  text-transform: uppercase;
+}
+
+.story-text p:last-child {
+  font-family: var(--poster-sans);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.btn.story-cta {
+  display: flex;
+  width: fit-content;
+  margin: 48px auto 0;
 }
 
 /* Calendar, registry, and directions links */
@@ -1399,6 +1439,41 @@ textarea:focus-visible {
   box-shadow: 3px 3px 0 var(--poster-ink);
 }
 
+.ring-name-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.ring-name-head .field-label {
+  margin-bottom: 0;
+}
+
+.roll-btn {
+  flex-shrink: 0;
+  padding: 6px 12px;
+  background: var(--poster-teal);
+  border: 3px solid var(--poster-ink);
+  border-radius: 8px;
+  box-shadow: 3px 3px 0 var(--poster-ink);
+  color: var(--poster-cream);
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 900;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: transform 120ms ease, box-shadow 120ms ease;
+}
+
+.roll-btn:hover,
+.roll-btn:focus-visible,
+.roll-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--poster-ink);
+}
+
 textarea {
   min-height: 96px;
   resize: vertical;
@@ -1499,7 +1574,6 @@ textarea {
 
   .ticket,
   .feast-grid,
-  .gallery,
   .field-row,
   .site-footer {
     grid-template-columns: 1fr;
@@ -1579,8 +1653,54 @@ textarea {
     display: block;
   }
 
-  .photo-slot.banner {
-    aspect-ratio: 16 / 10;
+  /* Phones: a vertical timeline. Cards zig-zag down a rope line that fills as guests scroll. */
+  .story {
+    position: relative;
+    width: min(440px, 100%);
+    display: grid;
+    gap: 32px;
+  }
+
+  .story::before,
+  .story::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 4px;
+    margin-left: -2px;
+    border-radius: 999px;
+  }
+
+  .story::before {
+    bottom: 0;
+    background: repeating-linear-gradient(var(--poster-ink) 0 10px, transparent 10px 18px);
+    opacity: 0.35;
+  }
+
+  .story::after {
+    height: calc(var(--progress, 1) * 100%);
+    background: var(--poster-red);
+  }
+
+  .story-card {
+    position: relative;
+    z-index: 1;
+    width: 78%;
+    --enter-x: -40px;
+  }
+
+  .story-card:nth-child(even) {
+    justify-self: end;
+    --enter-x: 40px;
+  }
+
+  .story.is-animated .story-card {
+    transition-delay: 0ms;
+  }
+
+  .btn.story-cta {
+    margin-top: 32px;
   }
 }
 
