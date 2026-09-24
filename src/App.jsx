@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { feast, gallery, links, marquee, party, schedule } from './content'
 import { Bolt, Character, LuchaMask, TicketStar } from './illustrations'
 
@@ -87,33 +88,36 @@ function CalendarSheet() {
       <button type="button" className="chip-btn" aria-haspopup="dialog" onClick={() => setOpen(true)}>
         Add to calendar
       </button>
-      {open && (
-        <div className="sheet-backdrop" onClick={() => setOpen(false)}>
-          <div
-            className="sheet"
-            ref={sheetRef}
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="sheet-title"
-            onClick={(event) => event.stopPropagation()}
-          >
-            <p className="sheet-title" id="sheet-title">
-              Add to your calendar
-            </p>
-            <p className="sheet-when">
-              {party.celebratingLong} · {party.timeShort}
-              <br />
-              {party.street}, {party.city}
-            </p>
-            <div className="sheet-choices">
-              {choices}
+      {/* Portal to <body>: the welcome screen's entrance animation would otherwise trap the fixed sheet inside it. */}
+      {open &&
+        createPortal(
+          <div className="sheet-backdrop" onClick={() => setOpen(false)}>
+            <div
+              className="sheet"
+              ref={sheetRef}
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="sheet-title"
+              onClick={(event) => event.stopPropagation()}
+            >
+              <p className="sheet-title" id="sheet-title">
+                Add to your calendar
+              </p>
+              <p className="sheet-when">
+                {party.celebratingLong} · {party.timeShort}
+                <br />
+                {party.street}, {party.city}
+              </p>
+              <div className="sheet-choices">
+                {choices}
+              </div>
+              <button type="button" className="sheet-cancel" onClick={() => setOpen(false)}>
+                Cancel
+              </button>
             </div>
-            <button type="button" className="sheet-cancel" onClick={() => setOpen(false)}>
-              Cancel
-            </button>
-          </div>
-        </div>
-      )}
+          </div>,
+          document.body,
+        )}
     </>
   )
 }
