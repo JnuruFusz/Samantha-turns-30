@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
-import { feast, gallery, marquee, party, schedule } from './content'
+import { createPortal } from 'react-dom'
+import { feast, gallery, links, marquee, party, schedule } from './content'
 import { Bolt, Character, LuchaMask, TicketStar } from './illustrations'
 
 function encode(data) {
@@ -28,6 +29,115 @@ function PhotoSlot({ id, title, hint, src, shape = 'wide' }) {
         </div>
       )}
     </div>
+  )
+}
+
+function CalendarLinks({ className = '' }) {
+  return (
+    <div className={`calendar-links ${className}`}>
+      <a className="chip-btn" href={links.googleCalendar} target="_blank" rel="noreferrer">
+        Google Calendar
+      </a>
+      <a className="chip-btn" href={links.calendarFile} download="sammi-30th.ics">
+        Apple / Outlook
+      </a>
+    </div>
+  )
+}
+
+const isApple = typeof navigator !== 'undefined' && /iPhone|iPad|iPod|Macintosh/.test(navigator.userAgent)
+
+function CalendarSheet() {
+  const [open, setOpen] = useState(false)
+  const sheetRef = useRef(null)
+
+  // While the sheet is up: lock page scroll, focus the first choice, and let Escape close it.
+  useEffect(() => {
+    if (!open) return undefined
+    const onKey = (event) => event.key === 'Escape' && setOpen(false)
+    document.addEventListener('keydown', onKey)
+    document.body.style.overflow = 'hidden'
+    sheetRef.current.querySelector('.sheet-btn').focus()
+    return () => {
+      document.removeEventListener('keydown', onKey)
+      document.body.style.overflow = ''
+    }
+  }, [open])
+
+  const apple = (
+    <a key="apple" className="sheet-btn" href={links.calendarFile} download="sammi-30th.ics" onClick={() => setOpen(false)}>
+      Apple / Outlook
+    </a>
+  )
+  const google = (
+    <a
+      key="google"
+      className="sheet-btn"
+      href={links.googleCalendar}
+      target="_blank"
+      rel="noreferrer"
+      onClick={() => setOpen(false)}
+    >
+      Google Calendar
+    </a>
+  )
+  const choices = isApple ? [apple, google] : [google, apple]
+
+  return (
+    <>
+      <button type="button" className="chip-btn" aria-haspopup="dialog" onClick={() => setOpen(true)}>
+        Add to calendar
+      </button>
+      {/* Portal to <body>: the welcome screen's entrance animation would otherwise trap the fixed sheet inside it. */}
+      {open &&
+        createPortal(
+          <div className="sheet-backdrop" onClick={() => setOpen(false)}>
+            <div
+              className="sheet"
+              ref={sheetRef}
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="sheet-title"
+              onClick={(event) => event.stopPropagation()}
+            >
+              <p className="sheet-title" id="sheet-title">
+                Add to your calendar
+              </p>
+              <p className="sheet-when">
+                {party.celebratingLong} · {party.timeShort}
+                <br />
+                {party.street}, {party.city}
+              </p>
+              <div className="sheet-choices">
+                {choices}
+              </div>
+              <button type="button" className="sheet-cancel" onClick={() => setOpen(false)}>
+                Cancel
+              </button>
+            </div>
+          </div>,
+          document.body,
+        )}
+    </>
+  )
+}
+
+function RegistryLink({ className = 'chip-btn' }) {
+  return (
+    <a className={className} href={links.registry} target="_blank" rel="noreferrer">
+      Gift registry ↗
+    </a>
+  )
+}
+
+function Address() {
+  return (
+    <>
+      {party.city} ·{' '}
+      <a className="directions" href={links.directions} target="_blank" rel="noreferrer">
+        Directions
+      </a>
+    </>
   )
 }
 
@@ -62,10 +172,17 @@ function RsvpForm() {
   }
 
   if (status === 'sent') {
+    const coming = attending !== 'No'
     return (
-      <div className="form success">
-        <h3>You&apos;re on the card.</h3>
-        <p>Thank you. We can&apos;t wait to celebrate Samantha with you.</p>
+      <div className="form success" role="status">
+        <h3>{coming ? 'You\u2019re on the card!' : 'Thanks for letting us know'}</h3>
+        <p>
+          {coming
+            ? `See you ${party.celebratingShort} at ${party.timeShort}. Lock it into your calendar:`
+            : 'We\u2019ll miss you in the ring. You can still send Sammi some love:'}
+        </p>
+        {coming && <CalendarLinks />}
+        <RegistryLink className="btn" />
       </div>
     )
   }
@@ -180,7 +297,13 @@ function Welcome({ sectionRef }) {
             See {party.nickname}&apos;s story ↓
           </a>
         </div>
-        <p className="welcome-date">{party.celebratingShort}</p>
+        <div className="welcome-extras">
+          <CalendarSheet />
+          <RegistryLink />
+        </div>
+        <p className="welcome-date">
+          {party.celebratingShort} · {party.timeShort} · St. Louis
+        </p>
       </div>
     </section>
   )
@@ -235,8 +358,10 @@ function Invite() {
           </div>
           <div>
             <p className="invite-label">Arena location</p>
-            <p className="invite-value">The Fiesta Dome</p>
-            <p className="invite-note">{party.location}</p>
+            <p className="invite-value">{party.street}</p>
+            <p className="invite-note">
+              <Address />
+            </p>
           </div>
           <div className="invite-attire">
             <p>★ Attire in the ring ★</p>
@@ -331,8 +456,10 @@ export default function App() {
               </div>
               <div>
                 <span className="ticket-label">Where / arena</span>
-                <strong>The Fiesta Dome</strong>
-                <span>{party.location}</span>
+                <strong>{party.street}</strong>
+                <span>
+                  <Address />
+                </span>
               </div>
             </div>
           </div>
@@ -416,6 +543,19 @@ export default function App() {
           <p>Register your wrestling tag-team status</p>
         </div>
         <RsvpForm />
+      </section>
+
+      <section className="band cyan save-date" id="save-the-date">
+        <div className="section-head light">
+          <h2>Before The Bell</h2>
+          <p>
+            {party.celebratingLong} · {party.timeShort} · {party.street}
+          </p>
+        </div>
+        <div className="save-date-actions">
+          <CalendarLinks />
+          <RegistryLink className="btn" />
+        </div>
       </section>
 
       <footer className="site-footer">
