@@ -44,31 +44,77 @@ function CalendarLinks({ className = '' }) {
   )
 }
 
-function CalendarMenu() {
-  const [open, setOpen] = useState(false)
-  const menuRef = useRef(null)
+const isApple = typeof navigator !== 'undefined' && /iPhone|iPad|iPod|Macintosh/.test(navigator.userAgent)
 
-  // Close when the guest taps anywhere else on the page.
+function CalendarSheet() {
+  const [open, setOpen] = useState(false)
+  const sheetRef = useRef(null)
+
+  // While the sheet is up: lock page scroll, focus the first choice, and let Escape close it.
   useEffect(() => {
     if (!open) return undefined
-    const close = (event) => {
-      if (!menuRef.current.contains(event.target)) setOpen(false)
+    const onKey = (event) => event.key === 'Escape' && setOpen(false)
+    document.addEventListener('keydown', onKey)
+    document.body.style.overflow = 'hidden'
+    sheetRef.current.querySelector('.sheet-btn').focus()
+    return () => {
+      document.removeEventListener('keydown', onKey)
+      document.body.style.overflow = ''
     }
-    document.addEventListener('pointerdown', close)
-    return () => document.removeEventListener('pointerdown', close)
   }, [open])
 
+  const apple = (
+    <a key="apple" className="sheet-btn" href={links.calendarFile} download="sammi-30th.ics" onClick={() => setOpen(false)}>
+      Apple / Outlook
+    </a>
+  )
+  const google = (
+    <a
+      key="google"
+      className="sheet-btn"
+      href={links.googleCalendar}
+      target="_blank"
+      rel="noreferrer"
+      onClick={() => setOpen(false)}
+    >
+      Google Calendar
+    </a>
+  )
+  const choices = isApple ? [apple, google] : [google, apple]
+
   return (
-    <div className="calendar-menu" ref={menuRef}>
-      <button type="button" className="chip-btn" aria-expanded={open} onClick={() => setOpen(!open)}>
+    <>
+      <button type="button" className="chip-btn" aria-haspopup="dialog" onClick={() => setOpen(true)}>
         Add to calendar
       </button>
       {open && (
-        <div onClick={() => setOpen(false)}>
-          <CalendarLinks className="calendar-pop" />
+        <div className="sheet-backdrop" onClick={() => setOpen(false)}>
+          <div
+            className="sheet"
+            ref={sheetRef}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="sheet-title"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <p className="sheet-title" id="sheet-title">
+              Add to your calendar
+            </p>
+            <p className="sheet-when">
+              {party.celebratingLong} · {party.timeShort}
+              <br />
+              {party.street}, {party.city}
+            </p>
+            <div className="sheet-choices">
+              {choices}
+            </div>
+            <button type="button" className="sheet-cancel" onClick={() => setOpen(false)}>
+              Cancel
+            </button>
+          </div>
         </div>
       )}
-    </div>
+    </>
   )
 }
 
@@ -248,7 +294,7 @@ function Welcome({ sectionRef }) {
           </a>
         </div>
         <div className="welcome-extras">
-          <CalendarMenu />
+          <CalendarSheet />
           <RegistryLink />
         </div>
         <p className="welcome-date">
