@@ -207,17 +207,14 @@ code {
 .welcome-mask {
   width: clamp(116px, 17vh, 160px);
   aspect-ratio: 1;
-  display: grid;
-  place-items: center;
-  background: var(--poster-cream);
-  border: 5px solid var(--poster-ink);
   border-radius: 50%;
   box-shadow: 6px 6px 0 var(--poster-ink);
 }
 
-.welcome-mask svg {
-  width: 62%;
-  height: 72%;
+/* The mask art carries its own cream fill and ink ring. */
+.welcome-mask img {
+  width: 100%;
+  height: 100%;
 }
 
 .welcome-badge {
@@ -458,6 +455,20 @@ code {
   height: 72%;
 }
 
+/* The taco art includes its own ring and 8px shadow: 268px of image for a 260px circle. */
+.hero-mascot.is-art {
+  display: block;
+  background: none;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.hero-mascot.is-art img {
+  width: calc(100% * 268 / 260);
+  max-width: none;
+}
+
 .hero-badge {
   width: 130px;
   aspect-ratio: 1;
@@ -567,6 +578,21 @@ code {
   border-radius: 50%;
   box-shadow: 6px 6px 0 var(--poster-ink);
   overflow: hidden;
+}
+
+.invite-mascot.is-art {
+  display: block;
+  background: none;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  overflow: visible;
+}
+
+/* The art includes its own 4px ring and 6px shadow: 186px of image for a 180px circle. */
+.invite-mascot.is-art img {
+  width: calc(100% * 186 / 180);
+  max-width: none;
 }
 
 .invite-mascot .character {
@@ -938,6 +964,16 @@ code {
   overflow: hidden;
 }
 
+.schedule-icon.is-art {
+  background: none;
+  border: 0;
+}
+
+.schedule-icon.is-art img {
+  width: 100%;
+  height: 100%;
+}
+
 .schedule-icon .character {
   width: 70%;
   height: 70%;
@@ -988,6 +1024,12 @@ code {
 .feast-art .character {
   width: 150px;
   height: 170px;
+}
+
+.feast-art .feast-illustration {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .feast-body {
@@ -1811,6 +1853,13 @@ textarea {
   .invite-mascot .character {
     width: 80%;
     height: 80%;
+  }
+
+  /* On phones the thumbs-up taco card brings its own frame and 5px shadow (155px for a 150px card). */
+  .invite-taco img.narrow-only {
+    display: block;
+    width: calc(100% * 155 / 150);
+    max-width: none;
   }
 
   .invite-celebrant p:first-child {

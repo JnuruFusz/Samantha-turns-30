@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { feast, links, marquee, party, ringNameParts, schedule, story } from './content'
-import { Bolt, Character, LuchaMask, TicketStar } from './illustrations'
+import { Bolt, Character, TicketStar } from './illustrations'
 
 function encode(data) {
   return new URLSearchParams(data).toString()
@@ -286,7 +286,7 @@ function Welcome({ sectionRef }) {
             <small>Lemonade &amp; sodas</small>
           </p>
           <div className="welcome-mask">
-            <LuchaMask />
+            <img src="/art/lucha-mask.png" alt="A red and blue lucha libre mask" />
           </div>
           <p className="welcome-badge">
             Best costume
@@ -400,14 +400,15 @@ function Invite() {
           <span>30th Fiesta</span>
         </h2>
         <div className="invite-bout">
-          <div className="invite-mascot">
-            <Character name="taco-walk" alt="Nacho the taco" />
+          <div className="invite-mascot is-art invite-taco">
+            <img className="wide-only" src="/art/boxing-taco.png" alt="The masked taco luchador, gloves up" />
+            <img className="narrow-only" src="/art/masked-taco-thumbs.png" alt="The masked taco luchador, thumbs up" />
           </div>
           <p className="invite-vs" aria-hidden="true">
             VS
           </p>
-          <div className="invite-mascot">
-            <Character name="pepper" alt="The chili pepper" />
+          <div className="invite-mascot is-art">
+            <img src="/art/chili-champ.png" alt="The chili pepper champ, flexing" />
           </div>
         </div>
         <div className="invite-celebrant">
@@ -471,8 +472,8 @@ function Hero() {
       <p className="hero-pill">A Nacho Libre-inspired birthday fiesta</p>
       <div className="hero-art">
         <p className="hero-badge gold">Free guaca-mole!</p>
-        <div className="hero-mascot">
-          <Character name="taco-walk" alt="Nacho the taco" />
+        <div className="hero-mascot is-art">
+          <img src="/art/masked-taco-walk.png" alt="The masked taco luchador strutting in" />
         </div>
         <p className="hero-badge red">Dance battle!</p>
       </div>
@@ -568,8 +569,8 @@ export default function App() {
           {schedule.map((item) => (
             <li key={item.id}>
               <span className="time">{item.time}</span>
-              <span className="schedule-icon">
-                <Character name={item.mascot} alt="" />
+              <span className={`schedule-icon${item.icon ? ' is-art' : ''}`}>
+                {item.icon ? <img src={item.icon} alt="" /> : <Character name={item.mascot} alt="" />}
               </span>
               <div>
                 <h3>{item.title}</h3>
@@ -588,7 +589,13 @@ export default function App() {
         <div className="feast-grid">
           {feast.map((item) => (
             <article key={item.id}>
-              <div className="feast-art">{mascotFor(item.mascot, item.title)}</div>
+              <div className="feast-art">
+                {item.art ? (
+                  <img className="feast-illustration" src={item.art} alt={item.title} loading="lazy" />
+                ) : (
+                  mascotFor(item.mascot, item.title)
+                )}
+              </div>
               <div className="feast-body">
                 <h3>{item.title}</h3>
                 <p>{item.detail}</p>
