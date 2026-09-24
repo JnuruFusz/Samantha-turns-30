@@ -65,8 +65,8 @@ export const schedule = [
     id: 'after',
     time: '7:30 PM',
     title: 'After-Party Libre',
-    detail: 'Sip custom margaritas and talk about the golden days as we wind down the ring lights.',
-    mascot: 'tequila',
+    detail: 'Sip ice-cold lemonade and talk about the golden days as we wind down the ring lights.',
+    mascot: 'lemonade',
   },
 ]
 
@@ -78,10 +78,10 @@ export const feast = [
     mascot: 'taco',
   },
   {
-    id: 'tequila',
-    title: 'El Grande Tequila',
-    detail: 'Salt on the rim. Championship energy in the glass.',
-    mascot: 'tequila',
+    id: 'lemonade',
+    title: 'El Grande Lemonade',
+    detail: 'Fresh lemonade, sodas, and ice-cold water to keep every luchador hydrated.',
+    mascot: 'lemonade',
   },
   {
     id: 'avocado',
@@ -153,6 +153,6 @@ export const story = [
 // Parts for the RSVP form's "Roll one" ring-name generator.
 export const ringNameParts = {
   titles: ['El', 'La', 'Señor', 'Señora', 'The Great', 'Mighty', 'Captain', 'Lil'],
-  firsts: ['Nacho', 'Guacamole', 'Churro', 'Salsa', 'Queso', 'Jalapeño', 'Tamale', 'Taco', 'Burrito', 'Tortilla', 'Pico', 'Margarita'],
+  firsts: ['Nacho', 'Guacamole', 'Churro', 'Salsa', 'Queso', 'Jalapeño', 'Tamale', 'Taco', 'Burrito', 'Tortilla', 'Pico', 'Horchata'],
   lasts: ['Supremo', 'Grande', 'Diablo', 'Libre', 'Loco', 'Magnífico', 'Macho', 'Misterioso', 'Fuego', 'Picante', 'Relámpago', 'del Ring'],
 }

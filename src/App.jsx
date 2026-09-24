@@ -282,8 +282,8 @@ function Welcome({ sectionRef }) {
         <p className="welcome-sub">A Nacho Libre-inspired birthday fiesta</p>
         <div className="welcome-art">
           <p className="welcome-badge">
-            Free margs
-            <small>Flowing all night</small>
+            Cold drinks
+            <small>Lemonade &amp; sodas</small>
           </p>
           <div className="welcome-mask">
             <LuchaMask />

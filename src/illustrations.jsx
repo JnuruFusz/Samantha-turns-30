@@ -1,5 +1,9 @@
+// Drawn characters are SVG; the rest are PNG.
+const svgCharacters = new Set(['lemonade'])
+
 export function Character({ name, alt, className = '' }) {
-  return <img className={`character ${className}`} src={`/characters/${name}.png`} alt={alt} />
+  const file = `${name}.${svgCharacters.has(name) ? 'svg' : 'png'}`
+  return <img className={`character ${className}`} src={`/characters/${file}`} alt={alt} />
 }
 
 export function TicketStar({ className = '' }) {
