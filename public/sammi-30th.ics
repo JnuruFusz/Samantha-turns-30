@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sammi 30th//Nacho Average Fiesta//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:sammi-30th-2026-10-18@sammibirthday.netlify.app
+DTSTAMP:20260924T000000Z
+DTSTART:20261018T203000Z
+DTEND:20261019T013000Z
+SUMMARY:Sammi's Nacho Average 30th Fiesta
+LOCATION:2211 Sims Ave\, Saint Louis\, MO 63114
+DESCRIPTION:Lucha masks and capes encouraged! RSVP and details: https://sa
+ mmibirthday.netlify.app
+URL:https://sammibirthday.netlify.app
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Sammi's 30th Fiesta is tomorrow
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+END:VCALENDAR

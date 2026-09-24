@@ -129,7 +129,7 @@ code {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: clamp(10px, 1.8vh, 18px);
+  gap: clamp(8px, 1.5vh, 18px);
 }
 
 .welcome-inner p {
@@ -1118,6 +1118,94 @@ code {
 .photo-path {
   margin: 10px 0 0;
   color: var(--red);
+}
+
+/* Calendar, registry, and directions links */
+
+.chip-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 14px;
+  background: var(--poster-cream);
+  border: 3px solid var(--poster-ink);
+  border-radius: 10px;
+  box-shadow: 3px 3px 0 var(--poster-ink);
+  color: var(--poster-ink);
+  cursor: pointer;
+  font-family: var(--poster-sans);
+  font-size: 13px;
+  font-weight: 900;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: transform 120ms ease, box-shadow 120ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.chip-btn:hover,
+.chip-btn:focus-visible,
+.chip-btn:active,
+.chip-btn[aria-expanded='true'] {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--poster-ink);
+}
+
+.calendar-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.calendar-menu {
+  position: relative;
+}
+
+.calendar-pop {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  z-index: 5;
+  flex-wrap: nowrap;
+  padding: 10px;
+  background: var(--poster-gold);
+  border: 3px solid var(--poster-ink);
+  border-radius: 12px;
+  box-shadow: 4px 4px 0 var(--poster-ink);
+  transform: translateX(-30%);
+}
+
+.welcome-extras {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.directions {
+  color: inherit;
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.save-date-actions {
+  display: grid;
+  justify-items: center;
+  gap: 20px;
+}
+
+.save-date-actions .btn {
+  min-width: min(320px, 100%);
+}
+
+.success {
+  display: grid;
+  justify-items: center;
+  gap: 16px;
+}
+
+.success .btn {
+  width: 100%;
 }
 
 /* Claim Your Ring Spot */
