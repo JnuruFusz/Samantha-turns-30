@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { feast, gallery, marquee, party, schedule } from './content'
-import { Character, TicketStar } from './illustrations'
+import { Bolt, Character, LuchaMask, TicketStar } from './illustrations'
 
 function encode(data) {
   return new URLSearchParams(data).toString()
@@ -135,6 +135,57 @@ function RsvpForm() {
   )
 }
 
+function Welcome({ sectionRef }) {
+  return (
+    <section className="welcome" id="welcome" ref={sectionRef}>
+      <p className="welcome-bg" aria-hidden="true">
+        Gran lucha libre · Gran lucha libre · Gran lucha libre
+      </p>
+      <div className="welcome-inner">
+        <p className="welcome-tag">★ Official championship invitation ★</p>
+        <p className="welcome-intro">You&apos;re invited to {party.nickname}&apos;s</p>
+        <h1 className="welcome-title">
+          <span>Nacho Average</span>
+          <span className="welcome-thirty">
+            <Bolt className="welcome-bolt" />
+            30th
+            <Bolt className="welcome-bolt" />
+          </span>
+        </h1>
+        <p className="welcome-sub">A Nacho Libre-inspired birthday fiesta</p>
+        <div className="welcome-art">
+          <p className="welcome-badge">
+            Free margs
+            <small>Flowing all night</small>
+          </p>
+          <div className="welcome-mask">
+            <LuchaMask />
+          </div>
+          <p className="welcome-badge">
+            Best costume
+            <small>Wins a trophy</small>
+          </p>
+        </div>
+        <div className="welcome-name">
+          <p>
+            Samantha <span>turns 30!</span>
+          </p>
+          <p>And she is the champion of this fiesta</p>
+        </div>
+        <div className="welcome-actions">
+          <a className="welcome-btn primary" href="#rsvp">
+            RSVP now
+          </a>
+          <a className="welcome-btn secondary" href="#fiesta">
+            See {party.nickname}&apos;s story ↓
+          </a>
+        </div>
+        <p className="welcome-date">{party.celebratingShort}</p>
+      </div>
+    </section>
+  )
+}
+
 function Invite() {
   return (
     <section className="invite">
@@ -210,10 +261,10 @@ function Hero() {
     <section className="hero" id="fiesta">
       <img className="hero-sunburst" src="/sunburst.svg" alt="" />
       <p className="hero-ribbon">★ The main event of the decade ★</p>
-      <h1 className="hero-title">
+      <h2 className="hero-title">
         <span>Nacho Average</span>
         <span>30th Fiesta</span>
-      </h1>
+      </h2>
       <p className="hero-pill">A Nacho Libre-inspired birthday fiesta</p>
       <div className="hero-art">
         <p className="hero-badge gold">Free guaca-mole!</p>
@@ -233,12 +284,28 @@ function mascotFor(id, title) {
 export default function App() {
   const storyPhotos = gallery.filter((item) => item.id !== 'party')
   const partyPhoto = gallery.find((item) => item.id === 'party')
+  const welcomeRef = useRef(null)
+  const [onWelcome, setOnWelcome] = useState(true)
+
+  // The welcome screen has its own RSVP button, so the floating chip waits until it scrolls away.
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => setOnWelcome(entry.isIntersecting), {
+      threshold: 0.35,
+    })
+    observer.observe(welcomeRef.current)
+    return () => observer.disconnect()
+  }, [])
 
   return (
     <div className="site">
-      <a className="rsvp-chip" href="#rsvp">
+      <a className={`rsvp-chip${onWelcome ? ' is-hidden' : ''}`} href="#rsvp"
+        aria-hidden={onWelcome}
+        tabIndex={onWelcome ? -1 : undefined}
+      >
         RSVP
       </a>
+
+      <Welcome sectionRef={welcomeRef} />
 
       <Hero />
 
