@@ -1399,6 +1399,41 @@ textarea:focus-visible {
   box-shadow: 3px 3px 0 var(--poster-ink);
 }
 
+.ring-name-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.ring-name-head .field-label {
+  margin-bottom: 0;
+}
+
+.roll-btn {
+  flex-shrink: 0;
+  padding: 6px 12px;
+  background: var(--poster-teal);
+  border: 3px solid var(--poster-ink);
+  border-radius: 8px;
+  box-shadow: 3px 3px 0 var(--poster-ink);
+  color: var(--poster-cream);
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 900;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: transform 120ms ease, box-shadow 120ms ease;
+}
+
+.roll-btn:hover,
+.roll-btn:focus-visible,
+.roll-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--poster-ink);
+}
+
 textarea {
   min-height: 96px;
   resize: vertical;

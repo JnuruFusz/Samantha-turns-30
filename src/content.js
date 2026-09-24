@@ -148,3 +148,10 @@ export const gallery = [
     shape: 'banner',
   },
 ]
+
+// Parts for the RSVP form's "Roll one" ring-name generator.
+export const ringNameParts = {
+  titles: ['El', 'La', 'Señor', 'Señora', 'The Great', 'Mighty', 'Captain', 'Lil'],
+  firsts: ['Nacho', 'Guacamole', 'Churro', 'Salsa', 'Queso', 'Jalapeño', 'Tamale', 'Taco', 'Burrito', 'Tortilla', 'Pico', 'Margarita'],
+  lasts: ['Supremo', 'Grande', 'Diablo', 'Libre', 'Loco', 'Magnífico', 'Macho', 'Misterioso', 'Fuego', 'Picante', 'Relámpago', 'del Ring'],
+}

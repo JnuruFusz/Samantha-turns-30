@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { feast, gallery, links, marquee, party, schedule } from './content'
+import { feast, gallery, links, marquee, party, ringNameParts, schedule } from './content'
 import { Bolt, Character, LuchaMask, TicketStar } from './illustrations'
 
 function encode(data) {
@@ -141,9 +141,21 @@ function Address() {
   )
 }
 
+function pick(list) {
+  return list[Math.floor(Math.random() * list.length)]
+}
+
+function rollRingName(current) {
+  const { titles, firsts, lasts } = ringNameParts
+  let name = current
+  while (name === current) name = `${pick(titles)} ${pick(firsts)} ${pick(lasts)}`
+  return name
+}
+
 function RsvpForm() {
   const [attending, setAttending] = useState('Yes')
   const [status, setStatus] = useState('idle')
+  const [ringName, setRingName] = useState('')
 
   async function handleSubmit(event) {
     event.preventDefault()
@@ -166,6 +178,7 @@ function RsvpForm() {
       })
       setStatus('sent')
       form.reset()
+      setRingName('')
     } catch {
       setStatus('error')
     }
@@ -202,7 +215,7 @@ function RsvpForm() {
       </div>
       <hr />
       <label>
-        <span>Luchador name (your name)</span>
+        <span>Your name</span>
         <input name="name" required placeholder="First and last name" />
       </label>
       <div className="field-row">
@@ -232,10 +245,23 @@ function RsvpForm() {
           </select>
         </label>
       </div>
-      <label>
-        <span>Ring name / disguise</span>
-        <input name="costume" placeholder="Optional" />
-      </label>
+      <div>
+        <div className="ring-name-head">
+          <label className="field-label" htmlFor="ring-name">
+            Ring name
+          </label>
+          <button type="button" className="roll-btn" onClick={() => setRingName(rollRingName(ringName))}>
+            <span aria-hidden="true">🎲</span> Roll one
+          </button>
+        </div>
+        <input
+          id="ring-name"
+          name="costume"
+          placeholder="Optional, or tap Roll one"
+          value={ringName}
+          onChange={(event) => setRingName(event.target.value)}
+        />
+      </div>
       <label>
         <span>Food notes</span>
         <input name="notes" placeholder="Allergies or anything we should know" />
@@ -254,7 +280,7 @@ function RsvpForm() {
 
 function Welcome({ sectionRef }) {
   return (
-    <section className="welcome" id="welcome" ref={sectionRef}>
+    <section className="welcome" id="welcome" ref={sectionRef} data-chip-watch="welcome">
       <p className="welcome-bg" aria-hidden="true">
         Gran lucha libre · Gran lucha libre · Gran lucha libre
       </p>
@@ -410,22 +436,34 @@ export default function App() {
   const storyPhotos = gallery.filter((item) => item.id !== 'party')
   const partyPhoto = gallery.find((item) => item.id === 'party')
   const welcomeRef = useRef(null)
-  const [onWelcome, setOnWelcome] = useState(true)
+  const rsvpRef = useRef(null)
+  const [visible, setVisible] = useState({ welcome: true, rsvp: false })
+  const hideChip = visible.welcome || visible.rsvp
 
-  // The welcome screen has its own RSVP button, so the floating chip waits until it scrolls away.
+  // The floating RSVP chip is redundant on the welcome screen (it has its own button) and on the form itself.
   useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => setOnWelcome(entry.isIntersecting), {
-      threshold: 0.35,
-    })
+    const observer = new IntersectionObserver(
+      (entries) => {
+        setVisible((current) => {
+          const next = { ...current }
+          for (const entry of entries) next[entry.target.dataset.chipWatch] = entry.isIntersecting
+          return next
+        })
+      },
+      { threshold: 0.2 },
+    )
     observer.observe(welcomeRef.current)
+    observer.observe(rsvpRef.current)
     return () => observer.disconnect()
   }, [])
 
   return (
     <div className="site">
-      <a className={`rsvp-chip${onWelcome ? ' is-hidden' : ''}`} href="#rsvp"
-        aria-hidden={onWelcome}
-        tabIndex={onWelcome ? -1 : undefined}
+      <a
+        className={`rsvp-chip${hideChip ? ' is-hidden' : ''}`}
+        href="#rsvp"
+        aria-hidden={hideChip}
+        tabIndex={hideChip ? -1 : undefined}
       >
         RSVP
       </a>
@@ -537,7 +575,7 @@ export default function App() {
         <PhotoSlot {...partyPhoto} />
       </section>
 
-      <section className="band cream rsvp-band" id="rsvp">
+      <section className="band cream rsvp-band" id="rsvp" ref={rsvpRef} data-chip-watch="rsvp">
         <div className="section-head">
           <h2>Claim Your Ring Spot</h2>
           <p>Register your wrestling tag-team status</p>
