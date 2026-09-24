@@ -1067,16 +1067,18 @@ code {
 /* The Highlight Reel: Sammi's story */
 
 .story {
-  width: min(1180px, 100%);
+  width: min(960px, 100%);
   margin: 0 auto;
   padding: 0;
   list-style: none;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 28px;
 }
 
 .story-card {
+  width: 210px;
   display: grid;
   align-content: start;
   background: var(--poster-cream);
@@ -1656,6 +1658,7 @@ textarea {
   }
 
   .story-card {
+    width: auto;
     flex: 0 0 76%;
     scroll-snap-align: start;
   }

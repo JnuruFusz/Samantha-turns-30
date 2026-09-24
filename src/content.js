@@ -134,6 +134,20 @@ export const story = [
     caption: 'Hyping up the whole arena, arms wide open.',
     src: '/photos/05-crowd-favorite.jpg',
   },
+  {
+    id: 'espresso-shot',
+    chapter: 'Chapter 6',
+    title: 'Espresso Shot Champion',
+    caption: 'Fueling up between rounds, one tiny cup at a time.',
+    src: '/photos/06-espresso-shot.jpg',
+  },
+  {
+    id: 'home-crowd',
+    chapter: 'Chapter 7',
+    title: 'Home Crowd Hero',
+    caption: 'Cardinals red from cap to jersey, cheering with her littlest tag-team partner.',
+    src: '/photos/07-home-crowd.jpg',
+  },
 ]
 
 // Parts for the RSVP form's "Roll one" ring-name generator.

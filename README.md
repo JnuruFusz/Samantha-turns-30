@@ -28,6 +28,3 @@ The Highlight Reel tells Sammi's story one chapter at a time, oldest first.
 1. Drop the photo in `public/photos/`, for example `06-new-chapter.jpg`.
 2. Add a chapter to `story` in `src/content.js` with its `title`, `caption`, and `src`.
 
-## Still needed
-
-- Photos for chapters 6–10 of the highlight reel
