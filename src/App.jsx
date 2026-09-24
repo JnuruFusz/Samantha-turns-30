@@ -3,10 +3,6 @@ import { createPortal } from 'react-dom'
 import { feast, links, marquee, party, ringNameParts, schedule, story } from './content'
 import { Bolt, Character, TicketStar } from './illustrations'
 
-function encode(data) {
-  return new URLSearchParams(data).toString()
-}
-
 function Wordmark({ size }) {
   return (
     <p className={`wordmark ${size}`}>
@@ -144,22 +140,16 @@ function RsvpForm() {
   async function handleSubmit(event) {
     event.preventDefault()
     const form = event.currentTarget
-    const data = {
-      'form-name': 'rsvp',
-      name: form.name.value,
-      attending,
-      guests: form.guests.value,
-      costume: form.costume.value,
-      notes: form.notes.value,
-      message: form.message.value,
-    }
+    setStatus('sending')
 
     try {
-      await fetch('/', {
+      // Send every field as-is (form-name, attending, and the honeypot included), the way Netlify expects.
+      const response = await fetch('/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: encode(data),
+        body: new URLSearchParams(new FormData(form)).toString(),
       })
+      if (!response.ok) throw new Error(`RSVP not accepted (${response.status})`)
       setStatus('sent')
       form.reset()
       setRingName('')
@@ -254,8 +244,8 @@ function RsvpForm() {
         <span>Birthday message</span>
         <textarea name="message" placeholder="Sweet, funny, or both..." />
       </label>
-      <button className="btn" type="submit">
-        Book my ring spot!
+      <button className="btn" type="submit" disabled={status === 'sending'}>
+        {status === 'sending' ? 'Sending…' : 'Book my ring spot!'}
       </button>
       {status === 'error' && <p>Something went wrong. Try again, or text us your RSVP.</p>}
     </form>
