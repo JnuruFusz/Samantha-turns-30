@@ -743,9 +743,7 @@ code {
   background: var(--poster-red);
 }
 
-.section-head,
-.gallery,
-.photo-slot.banner {
+.section-head {
   width: min(980px, 100%);
   margin-left: auto;
   margin-right: auto;
@@ -1066,58 +1064,85 @@ code {
   }
 }
 
-.gallery {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  margin-bottom: 16px;
-}
+/* The Highlight Reel: Sammi's story */
 
-.photo-slot {
-  background: var(--paper);
-  border: 1px dashed rgba(28, 18, 12, 0.25);
-  overflow: hidden;
-  display: grid;
-  place-items: center;
-  text-align: center;
-  min-height: 200px;
-  padding: 20px;
-  border-radius: 24px;
-}
-
-.photo-slot.filled {
-  border-style: solid;
+.story {
+  width: min(1180px, 100%);
+  margin: 0 auto;
   padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 28px;
 }
 
-.photo-slot.filled img {
+.story-card {
+  display: grid;
+  align-content: start;
+  background: var(--poster-cream);
+  border: 4px solid var(--poster-ink);
+  border-radius: 16px;
+  box-shadow: 6px 6px 0 var(--poster-ink);
+  overflow: hidden;
+}
+
+.story-card:nth-child(odd) {
+  transform: rotate(-1.2deg);
+}
+
+.story-card:nth-child(even) {
+  transform: rotate(1.2deg);
+}
+
+.story-card img {
   width: 100%;
-  height: 100%;
+  aspect-ratio: 3 / 4;
   object-fit: cover;
+  border-bottom: 4px solid var(--poster-ink);
 }
 
-.photo-slot.wide {
-  aspect-ratio: 16 / 10;
+.story-text {
+  display: grid;
+  gap: 4px;
+  padding: 14px 16px 18px;
 }
 
-.photo-slot.square {
-  aspect-ratio: 1;
+.story-text p {
+  margin: 0;
 }
 
-.photo-slot.banner {
-  aspect-ratio: 16 / 6;
-}
-
-.photo-label {
-  font-family: var(--display);
-  font-size: 22px;
-  margin: 0 0 6px;
+.story-chapter {
+  color: var(--poster-red);
+  font-family: var(--poster-sans);
+  font-size: 12px;
+  font-weight: 900;
   text-transform: uppercase;
 }
 
-.photo-path {
-  margin: 10px 0 0;
-  color: var(--red);
+.story-text h3 {
+  margin: 0;
+  font-family: var(--poster);
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.15;
+  text-transform: uppercase;
+}
+
+.story-text p:last-child {
+  font-family: var(--poster-sans);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.story-swipe {
+  display: none;
+}
+
+.btn.story-cta {
+  display: flex;
+  width: fit-content;
+  margin: 48px auto 0;
 }
 
 /* Calendar, registry, and directions links */
@@ -1534,7 +1559,6 @@ textarea {
 
   .ticket,
   .feast-grid,
-  .gallery,
   .field-row,
   .site-footer {
     grid-template-columns: 1fr;
@@ -1614,8 +1638,41 @@ textarea {
     display: block;
   }
 
-  .photo-slot.banner {
-    aspect-ratio: 16 / 10;
+  /* Phones: the story becomes a swipeable reel instead of a long stack. */
+  .story {
+    display: flex;
+    gap: 16px;
+    margin: 0 -20px;
+    padding: 8px 20px 20px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 20px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .story::-webkit-scrollbar {
+    display: none;
+  }
+
+  .story-card {
+    flex: 0 0 76%;
+    scroll-snap-align: start;
+  }
+
+  .story-swipe {
+    display: block;
+    margin: 4px 0 0;
+    font-family: var(--poster-sans);
+    font-size: 12px;
+    font-weight: 900;
+    text-align: center;
+    text-transform: uppercase;
+    opacity: 0.6;
+  }
+
+  .btn.story-cta {
+    margin-top: 32px;
   }
 }
 

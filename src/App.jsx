@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { feast, gallery, links, marquee, party, ringNameParts, schedule } from './content'
+import { feast, links, marquee, party, ringNameParts, schedule, story } from './content'
 import { Bolt, Character, LuchaMask, TicketStar } from './illustrations'
 
 function encode(data) {
@@ -13,22 +13,6 @@ function Wordmark({ size }) {
       <span>Nacho Average</span>
       <span>30th Fiesta</span>
     </p>
-  )
-}
-
-function PhotoSlot({ id, title, hint, src, shape = 'wide' }) {
-  return (
-    <div className={`photo-slot ${shape}${src ? ' filled' : ''}`}>
-      {src ? (
-        <img src={src} alt={title} />
-      ) : (
-        <div className="photo-empty">
-          <p className="photo-label">{title}</p>
-          <p className="caption">{hint}</p>
-          <p className="photo-path">public/photos/{id}.jpg</p>
-        </div>
-      )}
-    </div>
   )
 }
 
@@ -319,7 +303,7 @@ function Welcome({ sectionRef }) {
           <a className="welcome-btn primary" href="#rsvp">
             RSVP now
           </a>
-          <a className="welcome-btn secondary" href="#fiesta">
+          <a className="welcome-btn secondary" href="#story">
             See {party.nickname}&apos;s story ↓
           </a>
         </div>
@@ -433,8 +417,6 @@ function mascotFor(id, title) {
 }
 
 export default function App() {
-  const storyPhotos = gallery.filter((item) => item.id !== 'party')
-  const partyPhoto = gallery.find((item) => item.id === 'party')
   const welcomeRef = useRef(null)
   const rsvpRef = useRef(null)
   const [visible, setVisible] = useState({ welcome: true, rsvp: false })
@@ -559,20 +541,29 @@ export default function App() {
         </div>
       </div>
 
-      <section className="band cream" id="photos">
+      <section className="band cream" id="story">
         <div className="section-head">
           <h2>The Highlight Reel</h2>
-          <p>
-            Photo frames are ready. Add images to <code>public/photos</code>, then set each
-            <code> src </code> in <code>src/content.js</code>.
-          </p>
+          <p>30 years of {party.nickname}, round by round</p>
         </div>
-        <div className="gallery">
-          {storyPhotos.map((photo) => (
-            <PhotoSlot key={photo.id} {...photo} />
+        <ol className="story">
+          {story.map((item) => (
+            <li key={item.id} className="story-card">
+              <img src={item.src} alt={`${party.nickname}: ${item.title}`} loading="lazy" />
+              <div className="story-text">
+                <p className="story-chapter">{item.chapter}</p>
+                <h3>{item.title}</h3>
+                <p>{item.caption}</p>
+              </div>
+            </li>
           ))}
-        </div>
-        <PhotoSlot {...partyPhoto} />
+        </ol>
+        <p className="story-swipe" aria-hidden="true">
+          Swipe for more →
+        </p>
+        <a className="btn story-cta" href="#rsvp">
+          RSVP for the party
+        </a>
       </section>
 
       <section className="band cream rsvp-band" id="rsvp" ref={rsvpRef} data-chip-watch="rsvp">
