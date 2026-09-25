@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
+import MaskMedallion from './MaskMedallion'
 import { feast, links, marquee, party, ringNameParts, schedule, story } from './content'
 import { Bolt, Character, TicketStar } from './illustrations'
 
@@ -275,9 +276,7 @@ function Welcome({ sectionRef }) {
             Cold drinks
             <small>Lemonade &amp; sodas</small>
           </p>
-          <div className="welcome-mask">
-            <img src="/art/lucha-mask.png" alt="A red and blue lucha libre mask" />
-          </div>
+          <MaskMedallion />
           <p className="welcome-badge">
             Best costume
             <small>Wins a trophy</small>
@@ -365,7 +364,14 @@ function StoryReel() {
           className={`story-card${seen.has(item.id) ? ' is-in' : ''}`}
           style={{ '--delay': `${(index % 4) * 120}ms` }}
         >
-          <img src={item.src} alt={`${party.nickname}: ${item.title}`} loading="lazy" />
+          {item.src ? (
+            <img src={item.src} alt={`${party.nickname}: ${item.title}`} loading="lazy" />
+          ) : (
+            <div className="story-open">
+              <span className="story-open-num" aria-hidden="true">30</span>
+              <span className="story-open-note">📸 Photo booth pic coming {party.celebratingShort}</span>
+            </div>
+          )}
           <div className="story-text">
             <p className="story-chapter">{item.chapter}</p>
             <h3>{item.title}</h3>
