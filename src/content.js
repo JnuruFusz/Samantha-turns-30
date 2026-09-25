@@ -148,6 +148,13 @@ export const story = [
     caption: 'Cardinals red from cap to jersey, cheering with her daughter Ezzy, the littlest tag-team partner.',
     src: '/photos/07-home-crowd.jpg',
   },
+  {
+    id: 'thirty',
+    chapter: 'Chapter 8',
+    title: 'Thirty & Thriving',
+    caption: 'This chapter gets written at the party. Strike a pose at the photo booth and help fill it in!',
+    src: '',
+  },
 ]
 
 // Parts for the RSVP form's "Roll one" ring-name generator.
