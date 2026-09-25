@@ -390,7 +390,7 @@ function Invite() {
       <div className="invite-poster">
         <p className="invite-tag">
           <span className="wide-only">★ Official championship invitation ★</span>
-          <span className="narrow-only">★ Heavyweight birthday fiesta ★</span>
+          <span className="narrow-only">★ Championship birthday fiesta ★</span>
         </p>
         <h2 className="invite-title">
           <span>Nacho Average</span>
@@ -410,7 +410,7 @@ function Invite() {
         </div>
         <div className="invite-celebrant">
           <p>
-            <span className="wide-only">Featuring the heavyweight champion</span>
+            <span className="wide-only">Featuring the undisputed champion</span>
             <span className="narrow-only">Starring the champion</span>
           </p>
           <p className="invite-name">
@@ -530,7 +530,7 @@ export default function App() {
         <article className="ticket">
           <div className="ticket-main">
             <div>
-              <h3>Heavyweight birthday clash</h3>
+              <h3>Championship birthday bash</h3>
               <p className="kicker">Starring the birthday champion</p>
             </div>
             <hr />
