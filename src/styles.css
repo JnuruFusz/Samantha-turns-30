@@ -1267,6 +1267,103 @@ code {
   margin: 48px auto 0;
 }
 
+/* Luchador stickers dropped around the page */
+
+#schedule,
+.rsvp-band,
+.save-date {
+  position: relative;
+}
+
+.sticker {
+  position: absolute;
+  pointer-events: none;
+  filter: drop-shadow(5px 5px 0 rgba(45, 30, 27, 0.35));
+}
+
+.rsvp-sticker {
+  width: 190px;
+  left: max(16px, calc(50% - 320px - 230px));
+  bottom: 110px;
+  transform: rotate(-6deg);
+}
+
+.shy-sticker {
+  height: 230px;
+  left: max(12px, calc(50% - 460px));
+  bottom: 0;
+}
+
+/* JumpingLuchador drives these variables every frame; defaults are the resting pose. */
+.jumper {
+  position: absolute;
+  top: 300px;
+  right: calc(50% - 450px - 210px);
+  width: 170px;
+  aspect-ratio: 560 / 474;
+  pointer-events: none;
+}
+
+.jumper img {
+  position: relative;
+  width: 100%;
+  transform-origin: 50% 100%;
+  transform: translateY(var(--jump-y, 0px)) rotate(var(--jump-spin, 0deg)) skewX(var(--jump-skew, 0deg))
+    scale(var(--jump-sx, 1), var(--jump-sy, 1));
+  will-change: transform;
+}
+
+.jumper-shadow {
+  position: absolute;
+  left: 25%;
+  right: 25%;
+  bottom: -6px;
+  height: 14px;
+  border-radius: 50%;
+  background: rgb(45 30 27 / var(--shadow-alpha, 0.35));
+  transform: scaleX(var(--shadow-scale, 1));
+}
+
+/* Below full desktop width there's no side room, so the stickers join the flow. */
+@media (max-width: 1340px) {
+  .jumper {
+    position: relative;
+    top: auto;
+    right: auto;
+    width: 150px;
+    margin: 0 auto 28px;
+  }
+
+  .rsvp-sticker {
+    position: relative;
+    display: block;
+    left: auto;
+    bottom: auto;
+    width: 140px;
+    margin: -24px auto 12px;
+  }
+}
+
+@media (max-width: 860px) {
+  .jumper {
+    width: 130px;
+  }
+
+  .rsvp-sticker {
+    width: 120px;
+  }
+
+  .band.save-date {
+    padding-bottom: 170px;
+  }
+
+  .shy-sticker {
+    height: 140px;
+    left: 50%;
+    margin-left: -24px;
+  }
+}
+
 /* Calendar, registry, and directions links */
 
 .chip-btn {

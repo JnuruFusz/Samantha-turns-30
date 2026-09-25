@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
+import JumpingLuchador from './JumpingLuchador'
 import MaskMedallion from './MaskMedallion'
 import { feast, links, marquee, party, ringNameParts, schedule, story } from './content'
 import { Bolt, Character, TicketStar } from './illustrations'
@@ -557,6 +558,7 @@ export default function App() {
       </section>
 
       <section className="band cyan" id="schedule">
+        <JumpingLuchador className="schedule-jumper" />
         <div className="section-head light">
           <h2>Battle Royale Schedule</h2>
           <p>A blow-by-blow itinerary of the fiesta</p>
@@ -624,6 +626,7 @@ export default function App() {
       </section>
 
       <section className="band cream rsvp-band" id="rsvp" ref={rsvpRef} data-chip-watch="rsvp">
+        <img className="sticker rsvp-sticker" src="/art/luchador-cape.webp" alt="" aria-hidden="true" />
         <div className="section-head">
           <h2>Claim Your Ring Spot</h2>
           <p>Register your wrestling tag-team status</p>
@@ -632,6 +635,7 @@ export default function App() {
       </section>
 
       <section className="band cyan save-date" id="save-the-date">
+        <img className="sticker shy-sticker" src="/art/luchador-shy.webp" alt="" aria-hidden="true" />
         <div className="section-head light">
           <h2>Before The Bell</h2>
           <p>
